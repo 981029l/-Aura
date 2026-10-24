@@ -1,0 +1,153 @@
+@import '../styles/tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --border: 240 5.9% 90%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+  }
+}
+
+/*
+ * 入场动画工具类（animate-in / fade-in / zoom-in-* / slide-in-from-*）
+ * 部分组件使用了 tailwindcss-animate 插件的写法，但项目未安装该插件，这些类原本不生效。
+ * 这里用纯 CSS 实现同名类，保持组件代码不变即可在 Tailwind 3 下正常播放入场动画。
+ */
+@layer utilities {
+  /* 变量只由 fade-in / zoom-in-* 等修饰类设置，未设置时由 keyframes 中的 var() 回退值兜底，不依赖样式先后顺序 */
+  .animate-in {
+    animation: aura-enter 150ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .animate-in.duration-150 { animation-duration: 150ms; }
+  .animate-in.duration-200 { animation-duration: 200ms; }
+  .animate-in.duration-300 { animation-duration: 300ms; }
+  .fade-in { --aura-enter-opacity: 0; }
+  .zoom-in-75 { --aura-enter-scale: 0.75; }
+  .zoom-in-95 { --aura-enter-scale: 0.95; }
+  .slide-in-from-bottom { --aura-enter-translate-y: 100%; }
+
+  @keyframes aura-enter {
+    from {
+      opacity: var(--aura-enter-opacity, 1);
+      transform: translate3d(var(--aura-enter-translate-x, 0), var(--aura-enter-translate-y, 0), 0)
+        scale3d(var(--aura-enter-scale, 1), var(--aura-enter-scale, 1), var(--aura-enter-scale, 1));
+    }
+  }
+}
+
+/* 优雅的平滑滚动与选中文本效果 */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.25);
+  color: inherit;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.4);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(75, 85, 99, 0.6);
+}
+
+/* Prism 代码高亮精美暗黑/亮色样式 */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #e5e7eb;
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  tab-size: 2;
+  hyphens: none;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #9ca3af;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f87171;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #34d399;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #60a5fa;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #c084fc;
+}
+
+.token.function,
+.token.class-name {
+  color: #38bdf8;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fbbf24;
+}

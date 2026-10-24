@@ -1,0 +1,41 @@
+/* Arc UI Design Tokens & Motion Presets for Vue 3 */
+
+:root {
+  /* 3 大核心物理弹簧曲线预设 */
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-morph: cubic-bezier(0.2, 0, 0, 1);
+
+  /* 基础内外同心圆角 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* 默认强调色：极客蓝 (Blue) */
+  --accent-primary: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-light: rgba(59, 130, 246, 0.12);
+  --accent-glow: rgba(59, 130, 246, 0.35);
+  --accent-border: rgba(59, 130, 246, 0.25);
+}
+
+/* ================= 浮层高阶多层漫反射阴影 (Ambient Diffuse Shadows) ================= */
+:root {
+  --shadow-popover: 0 0 0 1px rgba(0, 0, 0, 0.05),
+                    0 4px 6px -1px rgba(0, 0, 0, 0.04),
+                    0 12px 24px -4px rgba(0, 0, 0, 0.08),
+                    0 24px 38px -8px rgba(0, 0, 0, 0.04);
+}
+
+.dark, html.dark {
+  --shadow-popover: 0 0 0 1px rgba(255, 255, 255, 0.1),
+                    0 4px 8px -2px rgba(0, 0, 0, 0.5),
+                    0 12px 24px -4px rgba(0, 0, 0, 0.6),
+                    0 24px 48px -8px rgba(0, 0, 0, 0.8);
+}
+
+.aura-popover {
+  box-shadow: var(--shadow-popover);
+}
+
