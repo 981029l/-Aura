@@ -12,7 +12,7 @@
 
 <br />
 
-[![Online Demo](https://img.shields.io/badge/Demo-在线演示-3b82f6?style=flat-square&logo=cloudflare)](https://ui.lvky.cn)
+[![Online Demo](https://img.shields.io/badge/Demo-在线演示-3b82f6?style=flat-square&logo=cloudflare)](https://auraui.lvky.cn)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-42b883?style=flat-square&logo=vue.js)](https://vuejs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4+-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
@@ -25,7 +25,7 @@
 
 ## 🌐 在线体验与演示
 
-* 🚀 **在线演示地址**：[https://ui.lvky.cn](https://ui.lvky.cn)
+* 🚀 **在线演示地址**：[https://auraui.lvky.cn](https://auraui.lvky.cn)
 * 🐙 **GitHub 仓库**：[https://github.com/981029l/-Aura.git](https://github.com/981029l/-Aura.git)
 
 ---
@@ -295,7 +295,7 @@ pnpm build
 本项目已原生配置 [wrangler.jsonc](wrangler.jsonc)，全面支持 Cloudflare Workers 与 Pages 一键持续集成：
 1. 在 Cloudflare 控制台直接关联 GitHub 仓库 `981029l/-Aura`；
 2. 构建命令填入 `pnpm run build`，输出目录填入 `dist`；
-3. 绑定自定义域名（如 `ui.lvky.cn`）即可享受全球 Anycast CDN 加速与免维护自动 HTTPS。
+3. 绑定自定义域名（如 `auraui.lvky.cn`）即可享受全球 Anycast CDN 加速与免维护自动 HTTPS。
 
 ### 私有化云服务器 (Nginx)
 
