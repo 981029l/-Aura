@@ -313,6 +313,15 @@ server {
 
 ---
 
+## 🤝 社区致敬与生态支持 (Special Thanks)
+
+特别致敬 **[LINUX DO 开发者社区 (linux.do)](https://linux.do)**  
+> *“真诚、友善、团结、专业”* —— 本项目深受 LINUX DO 活跃的技术探索精神与开源分享氛围启发，特向社区内所有热衷于前沿技术探索与无私分享的同仁致敬！
+
+[![LINUX DO](https://img.shields.io/badge/Community-LINUX%20DO-blue?style=for-the-badge&logo=linux&logoColor=white)](https://linux.do)
+
+---
+
 ## 📄 开源协议
 
 本项目基于 [MIT License](LICENSE) 协议开源。欢迎自由用于商业项目、SaaS 产品官网或个人作品集！
