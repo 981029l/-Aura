@@ -32,12 +32,18 @@ function handleGlobalKeydown(e: KeyboardEvent) {
   }
 }
 
+function handleOpenSearchModal() {
+  isSearchOpen.value = true
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleGlobalKeydown)
+  window.addEventListener('open-search-modal', handleOpenSearchModal)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleGlobalKeydown)
+  window.removeEventListener('open-search-modal', handleOpenSearchModal)
 })
 
 // 智能记忆目标组件 ID (记录用户上一次浏览的组件，默认回退至首个 A-Z 组件)
