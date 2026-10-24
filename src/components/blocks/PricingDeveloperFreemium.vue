@@ -47,7 +47,7 @@ const freemiumBullets = [
           <!-- 双行动按钮 -->
           <div class="mt-8 flex items-center gap-4">
             <a
-              href="https://github.com"
+              href="https://github.com/981029l/-Aura"
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95"

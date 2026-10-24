@@ -29,7 +29,7 @@ const megaSections = [
     title: '开发者生态',
     links: [
       { name: '快速上手起步文档', href: '#docs' },
-      { name: 'GitHub 官方仓库', href: 'https://github.com', external: true },
+      { name: 'GitHub 官方仓库', href: 'https://github.com/981029l/-Aura', external: true },
       { name: 'TypeScript 类型系统声明', href: '#types' },
       { name: 'Playwright E2E 测试集', href: '#tests' },
       { name: '更新日志 Changelog', href: '#changelog', badge: 'v2.4.0' },
@@ -68,7 +68,7 @@ const megaSections = [
 
           <!-- 社交与社区图标组 -->
           <div class="flex items-center gap-3 pt-2">
-            <a href="https://github.com" target="_blank" class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors">
+            <a href="https://github.com/981029l/-Aura" target="_blank" class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors">
               <Github class="w-4 h-4" />
             </a>
             <a href="https://twitter.com" target="_blank" class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors">

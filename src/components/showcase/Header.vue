@@ -163,9 +163,9 @@ watch(
         <!-- 明暗双模切换开关 -->
         <ThemeToggle />
 
-        <!-- 外部链接 / GitHub 占位 -->
+        <!-- 外部链接 / GitHub 仓库 -->
         <a
-          href="https://github.com"
+          href="https://github.com/981029l/-Aura"
           target="_blank"
           rel="noopener noreferrer"
           class="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-700 shadow-sm transition-all hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"

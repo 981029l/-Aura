@@ -6,7 +6,7 @@ const footerLinks = [
   { name: '109 款场景区块', href: '#blocks' },
   { name: '182 款原子动效', href: '#components' },
   { name: '开发文档手册', href: '#docs' },
-  { name: 'GitHub 仓库', href: 'https://github.com' },
+  { name: 'GitHub 仓库', href: 'https://github.com/981029l/-Aura' },
   { name: '企业技术支持', href: '#enterprise' },
 ]
 </script>
@@ -44,7 +44,7 @@ const footerLinks = [
 
         <!-- 社交快捷入口 -->
         <div class="flex items-center gap-3">
-          <a href="https://github.com" target="_blank" class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+          <a href="https://github.com/981029l/-Aura" target="_blank" class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
             <Github class="w-4 h-4" />
           </a>
           <a href="https://twitter.com" target="_blank" class="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">

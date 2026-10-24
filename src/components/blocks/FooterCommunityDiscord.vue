@@ -72,7 +72,7 @@ const totalCommunityMembers = ref(38400)
         </a>
 
         <a
-          href="https://github.com"
+          href="https://github.com/981029l/-Aura"
           target="_blank"
           class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-xs font-bold text-zinc-200 hover:text-white bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all"
         >

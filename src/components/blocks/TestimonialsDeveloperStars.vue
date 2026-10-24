@@ -53,7 +53,7 @@ const communityMetrics = [
       <!-- 行动胶囊 -->
       <div class="mt-10 flex items-center gap-4">
         <a
-          href="https://github.com"
+          href="https://github.com/981029l/-Aura"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-zinc-200 text-black font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95"
