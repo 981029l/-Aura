@@ -26,6 +26,8 @@ const props = withDefaults(defineProps<FlickeringGridProps>(), {
 const containerRef = ref<HTMLDivElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 let animationFrameId: number | null = null
+let isVisible = true
+let observer: IntersectionObserver | null = null
 let squares: Float32Array = new Float32Array(0)
 let cols = 0
 let rows = 0
@@ -93,18 +95,47 @@ function render() {
     }
   }
 
-  animationFrameId = requestAnimationFrame(render)
+  if (isVisible) {
+    animationFrameId = requestAnimationFrame(render)
+  }
 }
 
 onMounted(() => {
   resizeCanvas()
   window.addEventListener('resize', resizeCanvas)
+
+  if (containerRef.value && typeof IntersectionObserver !== 'undefined') {
+    observer = new IntersectionObserver((entries) => {
+      const entry = entries[0]
+      if (entry.isIntersecting) {
+        if (!isVisible) {
+          isVisible = true
+          render()
+        }
+      } else {
+        isVisible = false
+        if (animationFrameId !== null) {
+          cancelAnimationFrame(animationFrameId)
+          animationFrameId = null
+        }
+      }
+    }, { threshold: 0.05 })
+    observer.observe(containerRef.value)
+  }
+
   render()
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeCanvas)
-  if (animationFrameId) cancelAnimationFrame(animationFrameId)
+  if (observer) {
+    observer.disconnect()
+    observer = null
+  }
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
+  }
 })
 
 watch([() => props.squareSize, () => props.gridGap], () => {

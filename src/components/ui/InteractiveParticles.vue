@@ -28,6 +28,8 @@ const props = withDefaults(defineProps<ParticleProps>(), {
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 let animationFrameId: number | null = null
+let isVisible = true
+let observer: IntersectionObserver | null = null
 
 interface Particle {
   x: number
@@ -152,19 +154,46 @@ function render() {
     }
   }
 
-  animationFrameId = requestAnimationFrame(render)
+  if (isVisible) {
+    animationFrameId = requestAnimationFrame(render)
+  }
 }
 
 onMounted(() => {
   resizeCanvas()
   window.addEventListener('resize', resizeCanvas)
+  
+  if (canvasRef.value && typeof IntersectionObserver !== 'undefined') {
+    observer = new IntersectionObserver((entries) => {
+      const entry = entries[0]
+      if (entry.isIntersecting) {
+        if (!isVisible) {
+          isVisible = true
+          render()
+        }
+      } else {
+        isVisible = false
+        if (animationFrameId !== null) {
+          cancelAnimationFrame(animationFrameId)
+          animationFrameId = null
+        }
+      }
+    }, { threshold: 0.05 })
+    observer.observe(canvasRef.value)
+  }
+
   render()
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeCanvas)
+  if (observer) {
+    observer.disconnect()
+    observer = null
+  }
   if (animationFrameId !== null) {
     cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
   }
 })
 

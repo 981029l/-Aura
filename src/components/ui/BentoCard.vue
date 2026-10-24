@@ -71,7 +71,8 @@ function handleMouseMove(e: MouseEvent) {
           <router-link
             v-if="props.href"
             :to="props.href"
-            class="inline-flex items-center gap-1 transition-transform group-hover:translate-x-1"
+            class="inline-flex items-center gap-1 transition-transform group-hover:translate-x-1 after:absolute after:inset-0 after:rounded-2xl"
+            :title="`查看 ${props.name} 组件文档`"
           >
             {{ props.cta }}
             <span aria-hidden="true">&rarr;</span>

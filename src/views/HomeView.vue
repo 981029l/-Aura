@@ -62,9 +62,9 @@ function copyInstallGuide() {
       </div>
 
       <!-- 核心大标题 -->
-      <h1 class="relative z-10 max-w-4xl text-5xl font-black tracking-tight sm:text-6xl md:text-7xl leading-tight">
-        为 Vue 3 项目准备的
-        <span class="block bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 bg-clip-text text-transparent dark:from-sky-400 dark:via-blue-500 dark:to-indigo-400">
+      <h1 class="relative z-10 max-w-4xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.18] sm:leading-tight [text-wrap:balance]">
+        <span class="inline-block">为 Vue 3 精心打造的</span>
+        <span class="block mt-1 sm:mt-2 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 bg-clip-text text-transparent dark:from-sky-400 dark:via-blue-500 dark:to-indigo-400">
           动效组件库
         </span>
       </h1>
@@ -106,11 +106,13 @@ function copyInstallGuide() {
               <span class="h-3 w-3 rounded-full bg-rose-500/80 inline-block" />
               <span class="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
               <span class="h-3 w-3 rounded-full bg-emerald-500/80 inline-block" />
-              <span class="ml-2 font-mono text-xs text-zinc-400">components/BorderBeam.vue</span>
+              <span class="ml-2 font-mono text-xs text-zinc-400">
+                <span class="hidden sm:inline">components/</span>BorderBeam.vue
+              </span>
             </div>
             <div class="flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400">
               <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>复制即可使用</span>
+              <span>复制即用</span>
             </div>
           </div>
 
@@ -129,7 +131,7 @@ function copyInstallGuide() {
             </div>
             <router-link
               :to="'/docs/' + getLastVisitedDocId()"
-              class="shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
+              class="w-full sm:w-auto text-center shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
             >
               查看全部 {{ COMPONENTS_DATA.length }} 个组件 &rarr;
             </router-link>
@@ -275,10 +277,10 @@ function copyInstallGuide() {
         >
           <template #icon><Sparkles class="h-5 w-5 text-amber-500" /></template>
           <template #background>
-            <div class="relative h-full w-full flex flex-col items-center justify-center p-4 bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
-              <div class="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-purple-900/20 to-pink-900/20" />
-              <ShinyText text="新版本已发布" class="relative z-10 text-xl font-black tracking-tight" :speed="2.2" />
-              <p class="relative z-10 mt-2 text-xs font-mono text-zinc-400">高光循环扫过文字</p>
+            <div class="relative h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-zinc-100 via-white to-zinc-100/70 border border-zinc-200/80 rounded-xl overflow-hidden dark:bg-zinc-900 dark:border-zinc-800">
+              <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-pink-900/20" />
+              <ShinyText text="新版本已发布" class="relative z-10 text-xl font-black tracking-tight" :duration="2.2" />
+              <p class="relative z-10 mt-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">高光循环扫过文字</p>
             </div>
           </template>
         </BentoCard>
@@ -372,10 +374,13 @@ function copyInstallGuide() {
         >
           <template #icon><Sparkles class="h-5 w-5 text-sky-400" /></template>
           <template #background>
-            <div class="relative h-full w-full overflow-hidden rounded-xl bg-slate-950 p-4">
-              <Meteors :number="20" />
+            <div class="relative h-full w-full overflow-hidden rounded-xl bg-gradient-to-br from-indigo-950 via-slate-900 to-sky-950 border border-indigo-900/40 p-4 shadow-inner dark:from-slate-950 dark:to-zinc-950 dark:border-zinc-800">
+              <Meteors :number="18" />
               <div class="flex h-full flex-col justify-end">
-                <span class="text-xs font-mono text-sky-400 font-bold">深色背景装饰</span>
+                <span class="text-xs font-mono text-sky-300 dark:text-sky-400 font-semibold flex items-center gap-1.5">
+                  <span class="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
+                  <span>流星夜空视窗</span>
+                </span>
               </div>
             </div>
           </template>
@@ -471,22 +476,24 @@ function copyInstallGuide() {
 
     <!-- ================= 4. 旗舰极光天顶聚光灯展示 ================= -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-      <LampEffect class="min-h-[460px]">
-        <h2 class="bg-gradient-to-br from-slate-100 to-slate-400 bg-clip-text text-center text-3xl sm:text-6xl font-black tracking-tight text-transparent">
-          从一个组件开始
-        </h2>
-        <p class="mt-4 max-w-lg text-sm text-slate-400">
-          挑一个需要的组件，复制源码到项目里。除了 Vue 和 Tailwind CSS，只依赖几个轻量工具库。
-        </p>
-        <div class="mt-8 flex items-center justify-center gap-4">
-          <router-link to="/docs/lamp-effect">
-            <ShimmerButton shimmer-color="#38bdf8" class="h-11 px-6 text-sm">
-              <span>查看 Lamp Effect</span>
-              <ArrowRight class="h-4 w-4" />
-            </ShimmerButton>
-          </router-link>
-        </div>
-      </LampEffect>
+      <div class="relative overflow-hidden rounded-3xl p-1 bg-gradient-to-b from-blue-500/20 via-indigo-500/10 to-transparent border border-blue-500/20 shadow-2xl shadow-blue-500/5 dark:border-zinc-800/80">
+        <LampEffect class="min-h-[460px] rounded-[22px]">
+          <h2 class="text-center text-3xl sm:text-6xl font-black tracking-tight text-white dark:text-zinc-50 [text-wrap:balance]">
+            从一个组件开始
+          </h2>
+          <p class="mt-4 max-w-lg text-sm text-zinc-300 dark:text-zinc-400">
+            挑一个需要的组件，复制源码到项目里。除了 Vue 和 Tailwind CSS，只依赖几个轻量工具库。
+          </p>
+          <div class="mt-8 flex items-center justify-center gap-4">
+            <router-link to="/docs/lamp-effect">
+              <ShimmerButton shimmer-color="#38bdf8" class="h-11 px-6 text-sm">
+                <span>查看 Lamp Effect</span>
+                <ArrowRight class="h-4 w-4" />
+              </ShimmerButton>
+            </router-link>
+          </div>
+        </LampEffect>
+      </div>
     </section>
 
     <!-- ================= 4. 为什么选择 AURA UI ================= -->
