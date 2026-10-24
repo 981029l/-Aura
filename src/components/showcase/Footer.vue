@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Sparkles, Heart } from 'lucide-vue-next'
+import { Heart } from 'lucide-vue-next'
 </script>
 
 <template>
@@ -7,8 +7,8 @@ import { Sparkles, Heart } from 'lucide-vue-next'
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-3">
-          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-            <Sparkles class="h-4 w-4" />
+          <div class="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-200/80 bg-zinc-900 shadow-sm dark:border-zinc-800">
+            <img src="/logo.png" alt="Aura UI Logo" class="h-full w-full object-cover" />
           </div>
           <div>
             <p class="text-sm font-bold text-zinc-900 dark:text-zinc-100">

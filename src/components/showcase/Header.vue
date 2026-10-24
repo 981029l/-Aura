@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { Sparkles, Github, Layers, LayoutGrid, Menu, X, Search } from 'lucide-vue-next'
+import { Github, Layers, LayoutGrid, Menu, X, Search } from 'lucide-vue-next'
 import ThemeToggle from './ThemeToggle.vue'
 import SearchModal from './SearchModal.vue'
 import {
@@ -78,8 +78,8 @@ watch(
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
       <!-- 品牌 Logo -->
       <router-link to="/" class="flex items-center gap-2.5 group">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-md shadow-blue-500/20 text-white transition-transform duration-300 group-hover:scale-105">
-          <Sparkles class="h-5 w-5" />
+        <div class="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-200/80 bg-zinc-900 shadow-md shadow-blue-500/10 transition-transform duration-300 group-hover:scale-105 dark:border-zinc-800">
+          <img src="/logo.png" alt="Aura UI Logo" class="h-full w-full object-cover" />
         </div>
         <div class="flex flex-col">
           <div class="flex items-center gap-1.5">

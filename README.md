@@ -5,6 +5,13 @@
 
 <div align="center">
 
+<img src="./public/logo.png" alt="Aura UI Mascot Logo" width="128" style="border-radius: 26px; box-shadow: 0 12px 30px -6px rgba(37, 99, 235, 0.35);" />
+
+### 🤖 积木智能体 · 积木仔 (Block Bot)
+*Aura UI 官方专属吉祥物*
+
+<br />
+
 [![Online Demo](https://img.shields.io/badge/Demo-在线演示-3b82f6?style=flat-square&logo=cloudflare)](https://ui.lvky.cn)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-42b883?style=flat-square&logo=vue.js)](https://vuejs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4+-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
