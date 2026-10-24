@@ -21,7 +21,8 @@ const router = createRouter({
       component: () => import('@/views/BlocksView.vue'),
     },
     {
-      path: '/preview/block/:id?',
+      path: '/preview/:id?',
+      alias: ['/preview/block/:id?'],
       name: 'block-preview',
       component: () => import('@/views/BlockStandalonePreview.vue'),
     },

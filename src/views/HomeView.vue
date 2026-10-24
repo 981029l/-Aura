@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import {
   ArrowRight,
   Sparkles,
@@ -42,16 +42,7 @@ import NumberTicker from '@/components/ui/NumberTicker.vue'
 import AnimatedBeam from '@/components/ui/AnimatedBeam.vue'
 import LampEffect from '@/components/ui/LampEffect.vue'
 import FlickeringGrid from '@/components/ui/FlickeringGrid.vue'
-import WordRotate from '@/components/ui/WordRotate.vue'
-import TiltCard from '@/components/ui/TiltCard.vue'
-
-const rotatingWords = [
-  '交互动效原子',
-  '全栈场景区块',
-  'AI 智能体控制台',
-  'SaaS 商业大盘',
-  '高转化首屏 Hero',
-]
+import BlockMockupViewport from '@/components/showcase/BlockMockupViewport.vue'
 
 const homeBeamContainer = ref<HTMLDivElement | null>(null)
 const homeBeamUser = ref<HTMLDivElement | null>(null)
@@ -106,32 +97,20 @@ function openSearchModal() {
       <!-- 3D 复古科技网格作为 Hero 纵深背景 -->
       <RetroGrid :angle="65" :opacity="0.45" />
 
-      <!-- 顶部徽章 Badge -->
-      <div class="relative z-10 mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-200/90 bg-white/80 px-4 py-1.5 text-xs font-semibold text-zinc-800 shadow-sm backdrop-blur-md dark:border-zinc-800/90 dark:bg-zinc-900/80 dark:text-zinc-200">
-        <Sparkles class="h-3.5 w-3.5 text-blue-500" />
-        <ShinyText text="面向 Vue 3 的动效组件库与场景区块" />
-        <span class="rounded-full bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-blue-600 dark:text-blue-400">
+      <!-- 顶部徽章 Badge (内嵌官方积木仔 Mascot，灵动精致) -->
+      <div class="relative z-10 mb-6 inline-flex items-center gap-2.5 rounded-full border border-zinc-200/90 bg-white/80 pl-2 pr-3.5 py-1 text-xs font-semibold text-zinc-800 shadow-sm backdrop-blur-md dark:border-zinc-800/90 dark:bg-zinc-900/80 dark:text-zinc-200 transition-all hover:scale-105 hover:border-blue-500/40 cursor-default">
+        <img src="/logo.png" alt="Aura Mascot" class="h-5 w-5 rounded-md shadow-xs object-cover" />
+        <ShinyText text="Aura 3.5 动效库与场景区块" class="font-bold tracking-tight" />
+        <span class="rounded-full bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">
           v1.2 工业级
         </span>
       </div>
 
-      <!-- 核心大标题 (融合 Supahero 风格 3D Mascot 萌系图腾与现代大字号排版 + WordRotate 关键词动态轮播) -->
-      <h1 class="relative z-10 max-w-4xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.18] sm:leading-tight [text-wrap:balance]">
-        <span class="inline-flex items-center text-zinc-950 dark:text-white">
-          <img
-            src="/logo.png"
-            alt="Aura Mascot"
-            class="inline-block h-[1.12em] w-[1.12em] rounded-2xl shadow-xl shadow-blue-500/25 align-middle -mt-1 sm:-mt-2 mr-2.5 sm:mr-3.5 border border-zinc-200/90 dark:border-zinc-800 shrink-0 transition-transform duration-300 hover:scale-115 hover:-rotate-6 cursor-pointer animate-float"
-            title="Aura 智能体积木仔"
-          />
-          为 Vue 3 精心打造的
-        </span>
-        <span class="block mt-1 sm:mt-2 min-h-[1.25em] flex items-center justify-center">
-          <WordRotate
-            :words="rotatingWords"
-            :duration="2400"
-            class="font-black tracking-tight text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300"
-          />
+      <!-- 核心大标题 -->
+      <h1 class="relative z-10 max-w-4xl text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.12] sm:leading-[1.15] [text-wrap:balance]">
+        <span class="text-zinc-950 dark:text-white">为 Vue 3 精心打造的</span>
+        <span class="block mt-2 sm:mt-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300 font-extrabold tracking-tight">
+          交互动效与场景区块
         </span>
       </h1>
 
@@ -144,7 +123,7 @@ function openSearchModal() {
       <!-- 核心行动按钮 (CTA) -->
       <div class="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4">
         <router-link :to="'/docs/' + getLastVisitedDocId()">
-          <ShimmerButton shimmer-color="#60a5fa" class="h-12 px-8 text-base">
+          <ShimmerButton shimmer-color="#60a5fa" class="h-12 px-8 text-base shadow-lg shadow-blue-500/20">
             <span>浏览组件库</span>
             <ArrowRight class="h-4 w-4" />
           </ShimmerButton>
@@ -152,7 +131,7 @@ function openSearchModal() {
 
         <button
           type="button"
-          class="inline-flex h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-6 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur-md transition-all hover:bg-zinc-100 hover:scale-[1.02] active:scale-95 dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:bg-zinc-800"
+          class="inline-flex h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white/90 px-6 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur-md transition-all hover:bg-zinc-100 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
           @click="copyInstallGuide"
         >
           <Check v-if="heroCardCopied" class="h-4 w-4 text-emerald-500" />
@@ -161,89 +140,87 @@ function openSearchModal() {
         </button>
       </div>
 
-      <!-- Supahero 风格全局快速搜索探索胶囊栏 (带呼吸与光晕微动效) -->
-      <div class="relative z-10 mt-5 w-full max-w-md mx-auto">
+      <!-- Supahero 风格全局快速搜索探索胶囊栏 -->
+      <div class="relative z-10 mt-6 w-full max-w-lg mx-auto">
         <button
           type="button"
           @click="openSearchModal"
-          class="group flex w-full items-center justify-between rounded-2xl border border-zinc-200/90 bg-white/70 px-4 py-2.5 text-xs sm:text-sm text-zinc-500 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-blue-500/60 hover:bg-white hover:text-zinc-900 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-0.5 dark:border-zinc-800/90 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:border-blue-500/60 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+          class="group relative flex w-full items-center justify-between rounded-2xl border border-zinc-200/90 bg-white/80 px-4 py-3 text-xs sm:text-sm text-zinc-500 shadow-lg shadow-zinc-950/5 backdrop-blur-xl transition-all duration-200 hover:border-blue-500/50 hover:bg-white hover:text-zinc-900 hover:shadow-blue-500/10 dark:border-zinc-800/90 dark:bg-zinc-900/70 dark:text-zinc-400 dark:hover:border-blue-500/50 dark:hover:bg-zinc-900 dark:hover:text-zinc-100 cursor-pointer"
         >
-          <div class="flex items-center gap-2.5 truncate">
-            <Search class="h-4 w-4 text-zinc-400 group-hover:text-blue-500 group-hover:scale-110 transition-all duration-300 shrink-0" />
-            <span class="truncate">搜索 232+ 组件与 109+ 场景区块...</span>
+          <div class="flex items-center gap-3 truncate">
+            <Search class="h-4 w-4 text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
+            <span class="truncate font-medium">探索 232 款动效组件与 109 款场景区块...</span>
           </div>
-          <div class="flex items-center gap-1 shrink-0">
-            <kbd class="hidden sm:inline-flex h-5 items-center rounded border border-zinc-200 bg-zinc-100 px-1.5 font-mono text-[10px] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
-              Ctrl K
-            </kbd>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="hidden sm:inline-flex items-center gap-1 rounded-md border border-zinc-200 bg-zinc-100 px-2 py-0.5 font-mono text-[10px] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 shadow-2xs">
+              <kbd>Ctrl</kbd> <kbd>K</kbd>
+            </span>
           </div>
         </button>
       </div>
 
       <!-- 4 大核心特征标签胶囊 -->
       <div class="relative z-10 mt-5 flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-blue-500" />
           232+ 动效组件
         </span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-indigo-500" />
           109+ 场景区块
         </span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500" />
           100% Vue 3.5 & TS
         </span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-purple-500 animate-pulse" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-purple-500" />
           单文件复制即用
         </span>
       </div>
 
-      <!-- Hero 区域核心动态卡片（TiltCard 3D 视差微倾斜 + BorderBeam 环绕流光高光） -->
+      <!-- Hero 区域核心动态卡片（升级为标准 macOS 代码终端视窗，使 BorderBeam 成为天然的环绕流光高光） -->
       <div class="relative z-10 mt-10 w-full max-w-2xl text-left">
-        <TiltCard :max-tilt="7" :perspective="1200" :scale="1.015" class="w-full">
-          <div class="relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/80 p-5 shadow-2xl backdrop-blur-xl dark:border-zinc-800/90 dark:bg-zinc-950/80">
-            <BorderBeam :size="90" :duration="5" color-from="#38bdf8" color-to="#a855f7" :border-width="2" :border-radius="16" />
-            
-            <!-- Terminal 标题栏 -->
-            <div class="mb-4 flex items-center justify-between border-b border-zinc-200/60 pb-3 dark:border-zinc-800/60">
-              <div class="flex items-center gap-2">
-                <span class="h-3 w-3 rounded-full bg-rose-500/80 inline-block" />
-                <span class="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
-                <span class="h-3 w-3 rounded-full bg-emerald-500/80 inline-block" />
-                <span class="ml-2 font-mono text-xs text-zinc-400">
-                  <span class="hidden sm:inline">components/</span>BorderBeam.vue
-                </span>
-              </div>
-              <div class="flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span>3D 视差互动</span>
-              </div>
+        <div class="relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/80 p-5 shadow-2xl backdrop-blur-xl dark:border-zinc-800/90 dark:bg-zinc-950/80">
+          <BorderBeam :size="90" :duration="6" color-from="#38bdf8" color-to="#a855f7" :border-width="2" :border-radius="16" />
+          
+          <!-- Terminal 标题栏 -->
+          <div class="mb-4 flex items-center justify-between border-b border-zinc-200/60 pb-3 dark:border-zinc-800/60">
+            <div class="flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-rose-500/80 inline-block" />
+              <span class="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
+              <span class="h-3 w-3 rounded-full bg-emerald-500/80 inline-block" />
+              <span class="ml-2 font-mono text-xs text-zinc-400">
+                <span class="hidden sm:inline">components/</span>BorderBeam.vue
+              </span>
             </div>
-
-            <!-- Terminal 交互代码展示 -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
-              <div class="space-y-1 text-zinc-600 dark:text-zinc-300">
-                <p><span class="text-purple-500">&lt;template&gt;</span></p>
-                <p class="pl-4">
-                  <span class="text-blue-500">&lt;div</span> <span class="text-amber-500">class=</span><span class="text-emerald-500">"relative rounded-2xl"</span><span class="text-blue-500">&gt;</span>
-                </p>
-                <p class="pl-8">
-                  <span class="text-blue-500">&lt;BorderBeam</span> <span class="text-amber-500">:duration=</span><span class="text-emerald-500">"5"</span> <span class="text-amber-500">:border-width=</span><span class="text-emerald-500">"2"</span> <span class="text-blue-500">/&gt;</span>
-                </p>
-                <p class="pl-4"><span class="text-blue-500">&lt;/div&gt;</span></p>
-                <p><span class="text-purple-500">&lt;/template&gt;</span></p>
-              </div>
-              <router-link
-                :to="'/docs/' + getLastVisitedDocId()"
-                class="w-full sm:w-auto text-center shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
-              >
-                查看全部 {{ COMPONENTS_DATA.length }} 个组件 &rarr;
-              </router-link>
+            <div class="flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>复制即用</span>
             </div>
           </div>
-        </TiltCard>
+
+          <!-- Terminal 交互代码展示 -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+            <div class="space-y-1 text-zinc-600 dark:text-zinc-300">
+              <p><span class="text-purple-500">&lt;template&gt;</span></p>
+              <p class="pl-4">
+                <span class="text-blue-500">&lt;div</span> <span class="text-amber-500">class=</span><span class="text-emerald-500">"relative rounded-2xl"</span><span class="text-blue-500">&gt;</span>
+              </p>
+              <p class="pl-8">
+                <span class="text-blue-500">&lt;BorderBeam</span> <span class="text-amber-500">:duration=</span><span class="text-emerald-500">"5"</span> <span class="text-amber-500">:border-width=</span><span class="text-emerald-500">"2"</span> <span class="text-blue-500">/&gt;</span>
+              </p>
+              <p class="pl-4"><span class="text-blue-500">&lt;/div&gt;</span></p>
+              <p><span class="text-purple-500">&lt;/template&gt;</span></p>
+            </div>
+            <router-link
+              :to="'/docs/' + getLastVisitedDocId()"
+              class="w-full sm:w-auto text-center shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
+            >
+              查看全部 {{ COMPONENTS_DATA.length }} 个组件 &rarr;
+            </router-link>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -660,261 +637,15 @@ function openSearchModal() {
         </router-link>
       </div>
 
-      <!-- 精选 4 款场景区块陈列矩阵（升级为 Supahero 风格 16:10 黄金宽屏实景仿真视窗画廊） -->
+      <!-- 精选 4 款场景区块陈列矩阵（升级为 Supahero 风格 16:10 黄金宽屏真实实景仿真视窗画廊） -->
       <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-7">
         <div
           v-for="block in activeSuiteBlocks"
           :key="block.id"
-          class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200/90 bg-white shadow-sm transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl dark:border-zinc-800/90 dark:bg-zinc-900/80 dark:hover:border-blue-500/50 dark:hover:shadow-blue-500/10"
+          class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200/90 bg-white shadow-md transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-zinc-800/90 dark:bg-zinc-900/90"
         >
-          <!-- 1. 黄金 16:10 仿真视窗展台 (Supahero Signature Live Mockup Viewport) -->
-          <div class="relative w-full aspect-[16/10] overflow-hidden bg-zinc-950 flex flex-col border-b border-zinc-200/80 dark:border-zinc-800/80 select-none">
-            <!-- macOS 顶栏 Chrome -->
-            <div class="relative z-20 flex h-7 items-center justify-between px-3 border-b border-zinc-800/80 bg-zinc-900/90 backdrop-blur-xs">
-              <div class="flex items-center gap-1.5">
-                <span class="h-2 w-2 rounded-full bg-rose-500/80 inline-block" />
-                <span class="h-2 w-2 rounded-full bg-amber-500/80 inline-block" />
-                <span class="h-2 w-2 rounded-full bg-emerald-500/80 inline-block" />
-              </div>
-              <div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-zinc-800/80 text-[10px] font-mono text-zinc-400 max-w-[200px] truncate">
-                <span class="text-zinc-500">aura://</span>
-                <span class="text-zinc-300 font-semibold truncate">{{ block.id }}</span>
-              </div>
-              <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span class="hidden sm:inline">Vue 3.5</span>
-              </div>
-            </div>
-
-            <!-- 视窗拟真动态场景主体 (悬停平滑 scale-[1.03]) -->
-            <div class="relative flex-1 w-full overflow-hidden flex items-center justify-center p-4 sm:p-6 transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-              <!-- 1. 首屏英雄 (marketing-hero: 针对 4 款代表性 block 赋予专属视窗灵魂) -->
-              <div v-if="block.suiteId === 'marketing-hero'" class="relative w-full h-full flex items-center justify-center">
-                <!-- 1.1 倾斜视差仪表盘 (hero-dashboard-preview) -->
-                <div v-if="block.id === 'hero-dashboard-preview'" class="relative w-full h-full flex items-center justify-center p-2">
-                  <div class="relative w-full max-w-[270px] rounded-xl border border-indigo-500/40 bg-zinc-900/90 p-3 shadow-2xl shadow-indigo-500/20 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-                    <div class="flex items-center justify-between pb-2 border-b border-zinc-800">
-                      <div class="flex items-center gap-1.5">
-                        <span class="h-1.5 w-1.5 rounded-full bg-indigo-500" />
-                        <span class="text-[9px] font-mono text-zinc-300 font-bold">Analytics 3.0</span>
-                      </div>
-                      <span class="text-[8px] font-mono text-emerald-400 bg-emerald-500/10 px-1 rounded font-bold">+34.2%</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-1.5 mt-2">
-                      <div class="rounded bg-zinc-800/80 p-1.5 text-[8px] text-zinc-400">MRR: <span class="text-white font-bold">$42.8k</span></div>
-                      <div class="rounded bg-zinc-800/80 p-1.5 text-[8px] text-zinc-400">Churn: <span class="text-white font-bold">0.8%</span></div>
-                    </div>
-                    <div class="mt-2 h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
-                      <div class="h-full w-3/4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500" />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 1.2 开发者 macOS 终端 (hero-terminal-developer) -->
-                <div v-else-if="block.id === 'hero-terminal-developer'" class="relative w-full h-full flex items-center justify-center p-2">
-                  <div class="relative w-full max-w-[280px] rounded-xl border border-zinc-700/80 bg-zinc-950 p-3 font-mono text-[9px] text-zinc-300 shadow-xl">
-                    <div class="flex items-center gap-1.5 pb-2 mb-2 border-b border-zinc-800 text-zinc-500">
-                      <span class="h-1.5 w-1.5 rounded-full bg-rose-500/80" />
-                      <span class="h-1.5 w-1.5 rounded-full bg-amber-500/80" />
-                      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500/80" />
-                      <span class="text-[8px] text-zinc-400 ml-1">bash - 80x24</span>
-                    </div>
-                    <div class="text-emerald-400 font-bold">$ npx @auraui/cli init</div>
-                    <div class="text-zinc-500 mt-1">✔ Resolving high-fps Vue 3 templates...</div>
-                    <div class="text-zinc-400 mt-1 flex items-center gap-1">
-                      <span>✔ Ready in 12ms</span>
-                      <span class="h-2.5 w-1 bg-blue-400 animate-pulse" />
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 1.3 极光流光渐变 (hero-aurora-gradient) -->
-                <div v-else-if="block.id === 'hero-aurora-gradient'" class="relative w-full h-full flex flex-col items-center justify-center text-center p-3 overflow-hidden">
-                  <div class="absolute inset-0 bg-gradient-to-r from-teal-500/30 via-purple-600/30 to-rose-500/30 blur-2xl animate-aurora" />
-                  <div class="relative z-10 text-[10px] font-mono text-teal-300 font-semibold mb-1">Aurora Fluid Mesh</div>
-                  <div class="relative z-10 text-base sm:text-lg font-black text-white tracking-tight bg-gradient-to-r from-teal-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                    极光流光破晓
-                  </div>
-                  <div class="relative z-10 mt-2 px-3 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-[9px] text-white font-medium">
-                    CSS Gradient / High FPS
-                  </div>
-                </div>
-
-                <!-- 1.4 AI 工作台默认 (hero-ai-studio 及其他) -->
-                <div v-else class="relative w-full h-full flex flex-col items-center justify-center text-center">
-                  <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-indigo-500/10 to-purple-600/20 blur-xl pointer-events-none" />
-                  <div class="relative z-10 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-[9px] font-mono text-blue-400 mb-2">
-                    <Sparkles class="w-2.5 h-2.5" />
-                    <span>AI Native Hero</span>
-                  </div>
-                  <div class="relative z-10 text-sm sm:text-base font-black text-white tracking-tight leading-snug">
-                    Agent Studio
-                  </div>
-                  <div class="relative z-10 mt-1 text-[10px] text-zinc-400 max-w-[220px] truncate">
-                    High-converting responsive hero sections
-                  </div>
-                  <!-- 模拟微缩输入交互框 (带打字机脉冲光标) -->
-                  <div class="relative z-10 mt-3 w-full max-w-[240px] px-2.5 py-1.5 rounded-lg border border-zinc-700/80 bg-zinc-900/90 shadow-lg flex items-center justify-between text-[10px] text-zinc-400">
-                    <span class="truncate">Ask AI to generate layout<span class="inline-block w-1.5 h-3 bg-blue-500 animate-pulse ml-0.5 align-middle" /></span>
-                    <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-mono text-[9px] hover:scale-105 transition-transform">Run</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 2. 产品特性矩阵 (marketing-features) -->
-              <div v-else-if="block.suiteId === 'marketing-features'" class="relative w-full h-full grid grid-cols-2 gap-2">
-                <div class="rounded-xl border border-zinc-800 bg-zinc-900/80 p-2.5 flex flex-col justify-between">
-                  <div class="flex items-center gap-1.5">
-                    <Layers class="w-3.5 h-3.5 text-indigo-400" />
-                    <span class="text-[10px] font-bold text-zinc-200">Bento Grid</span>
-                  </div>
-                  <div class="space-y-1">
-                    <div class="h-1.5 w-3/4 rounded-full bg-zinc-700" />
-                    <div class="h-1.5 w-1/2 rounded-full bg-indigo-500/50" />
-                  </div>
-                </div>
-                <div class="rounded-xl border border-zinc-800 bg-zinc-900/80 p-2.5 flex flex-col justify-between">
-                  <div class="flex items-center justify-between">
-                    <Zap class="w-3.5 h-3.5 text-amber-400" />
-                    <span class="text-[9px] font-mono text-emerald-400">60 FPS</span>
-                  </div>
-                  <div class="h-6 w-full rounded bg-zinc-800/60 flex items-center justify-center text-[9px] font-mono text-zinc-400">
-                    GPU Driven
-                  </div>
-                </div>
-                <div class="col-span-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-3 py-2 flex items-center justify-between">
-                  <span class="text-[10px] font-medium text-zinc-300">Feature Matrix & Tabs</span>
-                  <span class="text-[9px] font-mono text-blue-400">&rarr;</span>
-                </div>
-              </div>
-
-              <!-- 3. 定价订阅矩阵 (marketing-pricing) -->
-              <div v-else-if="block.suiteId === 'marketing-pricing'" class="relative w-full h-full grid grid-cols-3 gap-1.5 items-center">
-                <div class="h-full rounded-xl border border-zinc-800 bg-zinc-900/60 p-2 flex flex-col justify-between text-center">
-                  <span class="text-[9px] font-mono text-zinc-400">Free</span>
-                  <span class="text-xs font-black text-white">$0</span>
-                  <span class="text-[8px] text-zinc-500">Starter</span>
-                </div>
-                <div class="h-[105%] rounded-xl border border-blue-500/60 bg-gradient-to-b from-blue-900/30 to-zinc-900 p-2 flex flex-col justify-between text-center shadow-lg shadow-blue-500/10">
-                  <span class="text-[9px] font-bold text-blue-400">Pro</span>
-                  <span class="text-sm font-black text-white">$29</span>
-                  <span class="rounded bg-blue-600 px-1 py-0.5 text-[8px] text-white font-bold">POPULAR</span>
-                </div>
-                <div class="h-full rounded-xl border border-zinc-800 bg-zinc-900/60 p-2 flex flex-col justify-between text-center">
-                  <span class="text-[9px] font-mono text-zinc-400">Team</span>
-                  <span class="text-xs font-black text-white">$99</span>
-                  <span class="text-[8px] text-zinc-500">Enterprise</span>
-                </div>
-              </div>
-
-              <!-- 4. 客户评价与背书 (marketing-testimonials) -->
-              <div v-else-if="block.suiteId === 'marketing-testimonials'" class="relative w-full h-full flex flex-col justify-center space-y-2">
-                <div class="rounded-xl border border-zinc-800 bg-zinc-900/80 p-2.5 flex items-center gap-2.5">
-                  <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 to-orange-500 shrink-0" />
-                  <div class="flex-1 min-w-0">
-                    <div class="text-[9px] text-amber-400 font-bold">★★★★★</div>
-                    <div class="text-[10px] text-zinc-300 truncate font-medium">“Vue 动效天花板，交互体验无与伦比！”</div>
-                  </div>
-                </div>
-                <div class="rounded-xl border border-zinc-800 bg-zinc-900/80 p-2.5 flex items-center gap-2.5 opacity-75">
-                  <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-400 to-indigo-500 shrink-0" />
-                  <div class="flex-1 min-w-0">
-                    <div class="text-[9px] text-amber-400 font-bold">★★★★★</div>
-                    <div class="text-[10px] text-zinc-300 truncate font-medium">“单文件复制即跑，完全免去复杂配置。”</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 5. AI 控制台与智能体 (ai-consoles) -->
-              <div v-else-if="block.suiteId === 'ai-consoles'" class="relative w-full h-full flex flex-col justify-between p-1">
-                <div class="flex items-center justify-between border-b border-zinc-800/80 pb-1.5">
-                  <div class="flex items-center gap-1.5">
-                    <Bot class="w-3.5 h-3.5 text-sky-400" />
-                    <span class="text-[10px] font-mono font-bold text-zinc-200">Agent Speculative CoT</span>
-                  </div>
-                  <span class="text-[9px] font-mono text-sky-400 animate-pulse">Thinking...</span>
-                </div>
-                <div class="space-y-1.5 my-auto">
-                  <div class="flex items-start gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-blue-500 mt-1 shrink-0" />
-                    <span class="text-[9px] font-mono text-zinc-400 leading-tight">Step 1: Parsing user intent into toolchain...</span>
-                  </div>
-                  <div class="flex items-start gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-indigo-500 mt-1 shrink-0" />
-                    <span class="text-[9px] font-mono text-zinc-300 leading-tight">Step 2: Dual-model speculation verification [PASS]</span>
-                  </div>
-                </div>
-                <div class="rounded-lg bg-zinc-900 border border-zinc-800 px-2 py-1 text-[9px] font-mono text-zinc-500 flex items-center justify-between">
-                  <span>Stream tokens: 184 t/s</span>
-                  <span class="text-emerald-400 font-bold">Active</span>
-                </div>
-              </div>
-
-              <!-- 6. SaaS 仪表盘与管理后台 (saas-dashboards) -->
-              <div v-else-if="block.suiteId === 'saas-dashboards'" class="relative w-full h-full flex flex-col justify-between">
-                <div class="grid grid-cols-3 gap-1.5">
-                  <div class="rounded-lg bg-zinc-900 border border-zinc-800 p-1.5">
-                    <div class="text-[8px] text-zinc-500">MRR</div>
-                    <div class="text-[11px] font-black text-white">$128.4k</div>
-                  </div>
-                  <div class="rounded-lg bg-zinc-900 border border-zinc-800 p-1.5">
-                    <div class="text-[8px] text-zinc-500">UPTIME</div>
-                    <div class="text-[11px] font-black text-emerald-400">99.99%</div>
-                  </div>
-                  <div class="rounded-lg bg-zinc-900 border border-zinc-800 p-1.5">
-                    <div class="text-[8px] text-zinc-500">P99 LATENCY</div>
-                    <div class="text-[11px] font-black text-purple-400">42ms</div>
-                  </div>
-                </div>
-                <!-- 模拟折线波形 -->
-                <div class="relative h-12 w-full flex items-end">
-                  <svg class="w-full h-full overflow-visible" viewBox="0 0 200 60" preserveAspectRatio="none">
-                    <defs>
-                      <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4" />
-                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M0,45 Q30,15 60,35 T120,20 T170,40 T200,10 L200,60 L0,60 Z" fill="url(#chartGrad)" />
-                    <path d="M0,45 Q30,15 60,35 T120,20 T170,40 T200,10" fill="none" stroke="#3b82f6" stroke-width="2" />
-                    <circle cx="200" cy="10" r="5" fill="#38bdf8" class="animate-ping opacity-75" />
-                    <circle cx="200" cy="10" r="3" fill="#60a5fa" />
-                  </svg>
-                </div>
-              </div>
-
-              <!-- 7. 入职与认证流程 (auth-onboarding) -->
-              <div v-else-if="block.suiteId === 'auth-onboarding'" class="relative w-full h-full flex items-center justify-center">
-                <div class="w-full max-w-[220px] rounded-xl border border-zinc-800 bg-zinc-900/95 p-3 shadow-xl">
-                  <div class="text-[10px] font-bold text-white text-center mb-2">安全双因素认证</div>
-                  <div class="flex justify-center gap-1.5 mb-2.5">
-                    <div class="w-6 h-7 rounded border border-zinc-700 bg-zinc-800/80 flex items-center justify-center font-mono text-xs font-bold text-white">4</div>
-                    <div class="w-6 h-7 rounded border border-zinc-700 bg-zinc-800/80 flex items-center justify-center font-mono text-xs font-bold text-white">8</div>
-                    <div class="w-6 h-7 rounded border border-blue-500 bg-blue-500/20 flex items-center justify-center font-mono text-xs font-bold text-blue-400 animate-pulse">9</div>
-                    <div class="w-6 h-7 rounded border border-zinc-700 bg-zinc-800/80 flex items-center justify-center font-mono text-xs text-zinc-500">•</div>
-                  </div>
-                  <div class="w-full py-1 rounded bg-blue-600 text-[9px] font-bold text-white text-center">
-                    验证并进入空间
-                  </div>
-                </div>
-              </div>
-
-              <!-- 8. 页脚与 CTA (footers-cta) -->
-              <div v-else class="relative w-full h-full flex flex-col justify-between p-1">
-                <div class="rounded-xl bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-purple-900/40 border border-blue-500/30 p-2.5 text-center">
-                  <div class="text-[11px] font-bold text-white">准备好开启高帧率动效了吗？</div>
-                  <div class="mt-1 inline-flex items-center gap-1 text-[9px] font-mono text-blue-400">
-                    <span>npx create-aura-app@latest</span>
-                  </div>
-                </div>
-                <div class="grid grid-cols-3 gap-2 text-[8px] font-mono text-zinc-500 pt-2 border-t border-zinc-800/60">
-                  <div>Components</div>
-                  <div>Documentation</div>
-                  <div>Open Source</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- 1. 黄金 16:10 独立仿真视窗组件 -->
+          <BlockMockupViewport :block-id="block.id" :title="block.title" />
 
           <!-- 2. 信息与双操作通道 (Supahero Signature Action Card) -->
           <div class="p-5 sm:p-6 flex flex-col justify-between flex-1">
@@ -1102,42 +833,3 @@ function openSearchModal() {
     </section>
   </div>
 </template>
-
-<style scoped>
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes aurora-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-aurora {
-  background-size: 200% 200%;
-  animation: aurora-flow 8s ease infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-float,
-  .animate-aurora {
-    animation: none !important;
-  }
-}
-</style>
