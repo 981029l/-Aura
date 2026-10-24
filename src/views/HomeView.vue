@@ -1,6 +1,25 @@
 <script setup lang="ts">
-import { ArrowRight, Sparkles, Layers, Zap, Copy, Check, ShieldCheck, Repeat, Mic, User, Database, Activity } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+import {
+  ArrowRight,
+  Sparkles,
+  Layers,
+  Zap,
+  Copy,
+  Check,
+  ShieldCheck,
+  Repeat,
+  Mic,
+  User,
+  Database,
+  Activity,
+  ExternalLink,
+  LayoutGrid,
+  Cpu,
+  Code2,
+} from 'lucide-vue-next'
 import { COMPONENTS_DATA, getLastVisitedDocId } from '@/data/components'
+import { BLOCK_SUITES, BLOCKS_DATA, getLastVisitedBlockId } from '@/data/blocks'
 import BorderBeam from '@/components/ui/BorderBeam.vue'
 import ShimmerButton from '@/components/ui/ShimmerButton.vue'
 import ShinyText from '@/components/ui/ShinyText.vue'
@@ -16,13 +35,16 @@ import NumberTicker from '@/components/ui/NumberTicker.vue'
 import AnimatedBeam from '@/components/ui/AnimatedBeam.vue'
 import LampEffect from '@/components/ui/LampEffect.vue'
 import FlickeringGrid from '@/components/ui/FlickeringGrid.vue'
-import { ref } from 'vue'
 
 const homeBeamContainer = ref<HTMLDivElement | null>(null)
 const homeBeamUser = ref<HTMLDivElement | null>(null)
 const homeBeamAi = ref<HTMLDivElement | null>(null)
 const homeBeamDb = ref<HTMLDivElement | null>(null)
 
+// 场景区块展台联动状态
+const activeSuiteId = ref<string>(BLOCK_SUITES[0].id)
+const activeSuite = computed(() => BLOCK_SUITES.find((s) => s.id === activeSuiteId.value) || BLOCK_SUITES[0])
+const activeSuiteBlocks = computed(() => BLOCKS_DATA.filter((b) => b.suiteId === activeSuiteId.value).slice(0, 4))
 
 const techLogos = [
   'Vue 3.5+',
@@ -63,16 +85,16 @@ function copyInstallGuide() {
 
       <!-- 核心大标题 -->
       <h1 class="relative z-10 max-w-4xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.18] sm:leading-tight [text-wrap:balance]">
-        <span class="inline-block">为 Vue 3 精心打造的</span>
-        <span class="block mt-1 sm:mt-2 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 bg-clip-text text-transparent dark:from-sky-400 dark:via-blue-500 dark:to-indigo-400">
-          动效组件库
+        <span class="inline-block text-zinc-950 dark:text-white">为 Vue 3 精心打造的</span>
+        <span class="block mt-1 sm:mt-2 text-zinc-800 dark:text-zinc-100 font-extrabold tracking-tight">
+          交互动效与场景区块
         </span>
       </h1>
 
       <!-- 痛点与定位描述 -->
       <p class="relative z-10 mx-auto mt-6 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
-        适合 <strong>AI 产品官网、SaaS 营销页和个人主页</strong>的动效组件。<br class="hidden sm:inline" />
-        每个组件是一个独立的 .vue 文件，复制到项目中即可使用和修改。
+        专为 <strong>AI 原生产品、SaaS 官网与企业级大盘</strong> 定制的高帧率 Web 交互基础设施。<br class="hidden sm:inline" />
+        <span class="font-medium text-zinc-900 dark:text-zinc-200">232 款动效组件 + 109 款场景区块</span>，单文件独立自包含，复制即跑。
       </p>
 
       <!-- 核心行动按钮 (CTA) -->
@@ -474,7 +496,139 @@ function copyInstallGuide() {
       </BentoGrid>
     </section>
 
-    <!-- ================= 4. 旗舰极光天顶聚光灯展示 ================= -->
+    <!-- ================= 4. 全栈场景区块 109 款工业级实景展台 ================= -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-200/80 dark:border-zinc-800/80">
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200/80 bg-indigo-50/50 px-3.5 py-1 text-xs font-semibold text-indigo-600 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-400">
+          <LayoutGrid class="h-3.5 w-3.5" />
+          <span>企业级场景区块生态</span>
+        </div>
+        <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-950 dark:text-zinc-50 [text-wrap:balance]">
+          全栈场景区块 · 109 款工业级生产就绪模块
+        </h2>
+        <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
+          不仅提供精细动效原子，更提供开箱即用的成套业务场景。涵盖 AI Agent 工作台、SaaS 数据大盘、高转化定价矩阵与入职引导流。
+        </p>
+      </div>
+
+      <!-- 8 大业务场景交互切换 Tabs -->
+      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 no-scrollbar">
+        <button
+          v-for="suite in BLOCK_SUITES"
+          :key="suite.id"
+          type="button"
+          @click="activeSuiteId = suite.id"
+          class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer"
+          :class="
+            activeSuiteId === suite.id
+              ? 'bg-zinc-900 text-white shadow-md dark:bg-white dark:text-black scale-[1.02]'
+              : 'border border-zinc-200 bg-white/70 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white'
+          "
+        >
+          <span>{{ suite.name }}</span>
+          <span
+            class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
+            :class="
+              activeSuiteId === suite.id
+                ? 'bg-white/20 text-white dark:bg-black/10 dark:text-black'
+                : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+            "
+          >
+            {{ suite.count }}
+          </span>
+        </button>
+      </div>
+
+      <!-- 当前场景套件全景简介卡 -->
+      <div class="mt-6 p-5 sm:p-6 rounded-2xl border border-zinc-200/90 bg-gradient-to-r from-zinc-50 via-white to-zinc-50 dark:border-zinc-800/90 dark:from-zinc-950 dark:via-zinc-900/50 dark:to-zinc-950 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-zinc-900 dark:text-zinc-100">{{ activeSuite.name }}</span>
+            <span class="text-xs font-mono text-zinc-400 uppercase">/ {{ activeSuite.englishName }}</span>
+          </div>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-3xl">
+            {{ activeSuite.description }}
+          </p>
+        </div>
+        <router-link
+          :to="'/blocks/' + activeSuiteBlocks[0]?.id"
+          class="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors"
+        >
+          <span>进入此套件中心 (共 {{ activeSuite.count }} 款)</span>
+          <ArrowRight class="w-3.5 h-3.5" />
+        </router-link>
+      </div>
+
+      <!-- 精选 4 款场景区块陈列矩阵 -->
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div
+          v-for="block in activeSuiteBlocks"
+          :key="block.id"
+          class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200/90 bg-white p-6 shadow-sm transition-all duration-300 hover:border-blue-500/50 hover:shadow-xl dark:border-zinc-800/90 dark:bg-zinc-900/60 dark:hover:border-blue-500/50 dark:hover:shadow-2xl dark:hover:shadow-blue-500/10"
+        >
+          <!-- 顶部状态与标签 -->
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full bg-blue-500" />
+                {{ block.name }}
+              </span>
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  v-for="tag in block.tags.slice(0, 3)"
+                  :key="tag"
+                  class="rounded-md border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[10px] font-mono text-zinc-600 dark:border-zinc-800 dark:bg-zinc-800 dark:text-zinc-400"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
+
+            <h3 class="text-base font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              {{ block.title }}
+            </h3>
+
+            <p class="mt-2 text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+              {{ block.description }}
+            </p>
+          </div>
+
+          <!-- 底部双行动通道 -->
+          <div class="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between gap-3 text-xs">
+            <router-link
+              :to="'/blocks/' + block.id"
+              class="inline-flex items-center gap-1 font-semibold text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors"
+            >
+              <span>查看源码与架构</span>
+              <ArrowRight class="w-3.5 h-3.5" />
+            </router-link>
+
+            <router-link
+              :to="'/preview/' + block.id"
+              target="_blank"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 font-semibold dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shadow-sm"
+              title="新标签页全屏独立实景体验"
+            >
+              <span>实景全屏预览</span>
+              <ExternalLink class="w-3.5 h-3.5 text-zinc-400 group-hover:text-blue-500" />
+            </router-link>
+          </div>
+        </div>
+      </div>
+
+      <!-- 场景区块全量行动大横幅 -->
+      <div class="mt-12 text-center">
+        <router-link
+          :to="'/blocks/' + getLastVisitedBlockId()"
+          class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black font-bold text-sm shadow-xl transition-transform hover:scale-105 active:scale-95"
+        >
+          <LayoutGrid class="w-4 h-4" />
+          <span>浏览全部 109 款场景区块军火库 &rarr;</span>
+        </router-link>
+      </div>
+    </section>
+
+    <!-- ================= 5. 旗舰极光天顶聚光灯展示 ================= -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
       <div class="relative overflow-hidden rounded-3xl p-1 bg-gradient-to-b from-blue-500/20 via-indigo-500/10 to-transparent border border-blue-500/20 shadow-2xl shadow-blue-500/5 dark:border-zinc-800/80">
         <LampEffect class="min-h-[460px] rounded-[22px]">
@@ -496,44 +650,100 @@ function copyInstallGuide() {
       </div>
     </section>
 
-    <!-- ================= 4. 为什么选择 AURA UI ================= -->
-    <section class="border-t border-zinc-200/80 bg-zinc-50/50 py-20 dark:border-zinc-800/80 dark:bg-zinc-950/40">
+    <!-- ================= 6. 现代工程的四大架构基石 ================= -->
+    <section class="border-t border-zinc-200/80 bg-zinc-50/50 py-24 dark:border-zinc-800/80 dark:bg-zinc-950/40">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-sm">
-            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-950/80 dark:text-blue-400">
-              <Copy class="h-5 w-5" />
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <p class="text-xs font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400 font-bold">
+            Architectural Pillars
+          </p>
+          <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-950 dark:text-zinc-50">
+            现代全栈工程的四大架构基石
+          </h2>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">
+            拒绝黑盒运行时与繁杂外部锁定。专为工程团队研发自主权打造的极简哲学。
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- 1. 单文件自包含 -->
+          <div class="rounded-2xl border border-zinc-200/90 bg-white p-6 dark:border-zinc-800/90 dark:bg-zinc-900/60 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-950/80 dark:text-blue-400">
+                <Code2 class="h-5 w-5" />
+              </div>
+              <div class="text-[10px] font-mono text-zinc-400 font-semibold mb-1">01 / ZERO CONFIG</div>
+              <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                单文件源码自包含
+              </h3>
+              <p class="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                无需魔改 tailwind.config.js。所有 CSS 关键帧与动画驱动完全自包含于单个 .vue 文件，复制即可无损运行。
+              </p>
             </div>
-            <h3 class="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-              复制源码使用
-            </h3>
-            <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              组件不通过 npm 包分发。把源码复制到项目的 src/components/ui 目录，之后可以随意修改。
-            </p>
+            <div class="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/60 text-[11px] font-mono text-blue-600 dark:text-blue-400 flex items-center gap-1">
+              <Check class="w-3.5 h-3.5 text-emerald-500" />
+              <span>源码所有权完全归属于你</span>
+            </div>
           </div>
 
-          <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-sm">
-            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950/80 dark:text-emerald-400">
-              <Zap class="h-5 w-5" />
+          <!-- 2. 严格类型与 Vue 3.5 宏 -->
+          <div class="rounded-2xl border border-zinc-200/90 bg-white p-6 dark:border-zinc-800/90 dark:bg-zinc-900/60 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950/80 dark:text-indigo-400">
+                <Cpu class="h-5 w-5" />
+              </div>
+              <div class="text-[10px] font-mono text-zinc-400 font-semibold mb-1">02 / TYPE SAFE</div>
+              <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                100% 严格类型系统
+              </h3>
+              <p class="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                基于 TypeScript 与 Vue 3.5 宏定义。每个 Props、Emits、Slots 均配备严谨的接口推断，拒绝任何 any 糊弄。
+              </p>
             </div>
-            <h3 class="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-              单文件自包含
-            </h3>
-            <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              大部分组件的动画关键帧写在组件文件内部，不需要额外修改 tailwind.config.js。
-            </p>
+            <div class="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/60 text-[11px] font-mono text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+              <Check class="w-3.5 h-3.5 text-emerald-500" />
+              <span>IDE 智能联想零障碍</span>
+            </div>
           </div>
 
-          <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-sm">
-            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-950/80 dark:text-purple-400">
-              <Sparkles class="h-5 w-5" />
+          <!-- 3. 视口懒挂载与 60fps -->
+          <div class="rounded-2xl border border-zinc-200/90 bg-white p-6 dark:border-zinc-800/90 dark:bg-zinc-900/60 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950/80 dark:text-emerald-400">
+                <Zap class="h-5 w-5" />
+              </div>
+              <div class="text-[10px] font-mono text-zinc-400 font-semibold mb-1">03 / PERFORMANCE</div>
+              <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                60fps 视口懒休眠
+              </h3>
+              <p class="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                密集 Canvas 与粒子内置 IntersectionObserver 视口感知，移出视野瞬间休眠释放 GPU，保障复杂中后台丝滑不掉帧。
+              </p>
             </div>
-            <h3 class="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-              支持浅色和深色模式
-            </h3>
-            <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              每个组件都分别配置了浅色和深色两套配色，页面切换 dark 模式时自动跟随。
-            </p>
+            <div class="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/60 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <Check class="w-3.5 h-3.5 text-emerald-500" />
+              <span>无障碍减弱动画已适配</span>
+            </div>
+          </div>
+
+          <!-- 4. 双核生态与场景拼装 -->
+          <div class="rounded-2xl border border-zinc-200/90 bg-white p-6 dark:border-zinc-800/90 dark:bg-zinc-900/60 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-950/80 dark:text-purple-400">
+                <Layers class="h-5 w-5" />
+              </div>
+              <div class="text-[10px] font-mono text-zinc-400 font-semibold mb-1">04 / ECOSYSTEM</div>
+              <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                原子与全栈区块双核
+              </h3>
+              <p class="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                232 款动效组件结合 109 款业务场景区块。小到按键微交互，大到完整的 AI 控制台或营销主页，快速组合成型。
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/60 text-[11px] font-mono text-purple-600 dark:text-purple-400 flex items-center gap-1">
+              <Check class="w-3.5 h-3.5 text-emerald-500" />
+              <span>全生命周期覆盖就绪</span>
+            </div>
           </div>
         </div>
       </div>
