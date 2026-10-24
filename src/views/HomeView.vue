@@ -42,6 +42,16 @@ import NumberTicker from '@/components/ui/NumberTicker.vue'
 import AnimatedBeam from '@/components/ui/AnimatedBeam.vue'
 import LampEffect from '@/components/ui/LampEffect.vue'
 import FlickeringGrid from '@/components/ui/FlickeringGrid.vue'
+import WordRotate from '@/components/ui/WordRotate.vue'
+import TiltCard from '@/components/ui/TiltCard.vue'
+
+const rotatingWords = [
+  '交互动效原子',
+  '全栈场景区块',
+  'AI 智能体控制台',
+  'SaaS 商业大盘',
+  '高转化首屏 Hero',
+]
 
 const homeBeamContainer = ref<HTMLDivElement | null>(null)
 const homeBeamUser = ref<HTMLDivElement | null>(null)
@@ -105,18 +115,23 @@ function openSearchModal() {
         </span>
       </div>
 
-      <!-- 核心大标题 (融合 Supahero 风格 3D Mascot 萌系图腾与现代大字号排版) -->
+      <!-- 核心大标题 (融合 Supahero 风格 3D Mascot 萌系图腾与现代大字号排版 + WordRotate 关键词动态轮播) -->
       <h1 class="relative z-10 max-w-4xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.18] sm:leading-tight [text-wrap:balance]">
         <span class="inline-flex items-center text-zinc-950 dark:text-white">
           <img
             src="/logo.png"
             alt="Aura Mascot"
-            class="inline-block h-[1.12em] w-[1.12em] rounded-2xl shadow-xl shadow-blue-500/20 align-middle -mt-1 sm:-mt-2 mr-2.5 sm:mr-3.5 border border-zinc-200/90 dark:border-zinc-800 shrink-0 transition-transform duration-300 hover:scale-105"
+            class="inline-block h-[1.12em] w-[1.12em] rounded-2xl shadow-xl shadow-blue-500/25 align-middle -mt-1 sm:-mt-2 mr-2.5 sm:mr-3.5 border border-zinc-200/90 dark:border-zinc-800 shrink-0 transition-transform duration-300 hover:scale-115 hover:-rotate-6 cursor-pointer animate-float"
+            title="Aura 智能体积木仔"
           />
           为 Vue 3 精心打造的
         </span>
-        <span class="block mt-1 sm:mt-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300 font-extrabold tracking-tight">
-          交互动效与场景区块
+        <span class="block mt-1 sm:mt-2 min-h-[1.25em] flex items-center justify-center">
+          <WordRotate
+            :words="rotatingWords"
+            :duration="2400"
+            class="font-black tracking-tight text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300"
+          />
         </span>
       </h1>
 
@@ -137,7 +152,7 @@ function openSearchModal() {
 
         <button
           type="button"
-          class="inline-flex h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-6 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur-md transition-all hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:bg-zinc-800"
+          class="inline-flex h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-6 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur-md transition-all hover:bg-zinc-100 hover:scale-[1.02] active:scale-95 dark:border-zinc-800 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:bg-zinc-800"
           @click="copyInstallGuide"
         >
           <Check v-if="heroCardCopied" class="h-4 w-4 text-emerald-500" />
@@ -146,15 +161,15 @@ function openSearchModal() {
         </button>
       </div>
 
-      <!-- Supahero 风格全局快速搜索探索胶囊栏 -->
+      <!-- Supahero 风格全局快速搜索探索胶囊栏 (带呼吸与光晕微动效) -->
       <div class="relative z-10 mt-5 w-full max-w-md mx-auto">
         <button
           type="button"
           @click="openSearchModal"
-          class="group flex w-full items-center justify-between rounded-2xl border border-zinc-200/90 bg-white/70 px-4 py-2.5 text-xs sm:text-sm text-zinc-500 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-blue-500/50 hover:bg-white hover:text-zinc-900 hover:shadow-md dark:border-zinc-800/90 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:border-blue-500/50 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
+          class="group flex w-full items-center justify-between rounded-2xl border border-zinc-200/90 bg-white/70 px-4 py-2.5 text-xs sm:text-sm text-zinc-500 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-blue-500/60 hover:bg-white hover:text-zinc-900 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-0.5 dark:border-zinc-800/90 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:border-blue-500/60 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
         >
           <div class="flex items-center gap-2.5 truncate">
-            <Search class="h-4 w-4 text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
+            <Search class="h-4 w-4 text-zinc-400 group-hover:text-blue-500 group-hover:scale-110 transition-all duration-300 shrink-0" />
             <span class="truncate">搜索 232+ 组件与 109+ 场景区块...</span>
           </div>
           <div class="flex items-center gap-1 shrink-0">
@@ -167,66 +182,68 @@ function openSearchModal() {
 
       <!-- 4 大核心特征标签胶囊 -->
       <div class="relative z-10 mt-5 flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-blue-500" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
           232+ 动效组件
         </span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
           109+ 场景区块
         </span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
           100% Vue 3.5 & TS
         </span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
-          <span class="h-1.5 w-1.5 rounded-full bg-purple-500" />
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs transition-transform duration-200 hover:scale-105 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-purple-500 animate-pulse" />
           单文件复制即用
         </span>
       </div>
 
-      <!-- Hero 区域核心动态卡片（升级为标准 macOS 代码终端视窗，使 BorderBeam 成为天然的环绕流光高光） -->
+      <!-- Hero 区域核心动态卡片（TiltCard 3D 视差微倾斜 + BorderBeam 环绕流光高光） -->
       <div class="relative z-10 mt-10 w-full max-w-2xl text-left">
-        <div class="relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/80 p-5 shadow-2xl backdrop-blur-xl dark:border-zinc-800/90 dark:bg-zinc-950/80">
-          <BorderBeam :size="90" :duration="6" color-from="#38bdf8" color-to="#a855f7" :border-width="2" :border-radius="16" />
-          
-          <!-- Terminal 标题栏 -->
-          <div class="mb-4 flex items-center justify-between border-b border-zinc-200/60 pb-3 dark:border-zinc-800/60">
-            <div class="flex items-center gap-2">
-              <span class="h-3 w-3 rounded-full bg-rose-500/80 inline-block" />
-              <span class="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
-              <span class="h-3 w-3 rounded-full bg-emerald-500/80 inline-block" />
-              <span class="ml-2 font-mono text-xs text-zinc-400">
-                <span class="hidden sm:inline">components/</span>BorderBeam.vue
-              </span>
+        <TiltCard :max-tilt="7" :perspective="1200" :scale="1.015" class="w-full">
+          <div class="relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/80 p-5 shadow-2xl backdrop-blur-xl dark:border-zinc-800/90 dark:bg-zinc-950/80">
+            <BorderBeam :size="90" :duration="5" color-from="#38bdf8" color-to="#a855f7" :border-width="2" :border-radius="16" />
+            
+            <!-- Terminal 标题栏 -->
+            <div class="mb-4 flex items-center justify-between border-b border-zinc-200/60 pb-3 dark:border-zinc-800/60">
+              <div class="flex items-center gap-2">
+                <span class="h-3 w-3 rounded-full bg-rose-500/80 inline-block" />
+                <span class="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
+                <span class="h-3 w-3 rounded-full bg-emerald-500/80 inline-block" />
+                <span class="ml-2 font-mono text-xs text-zinc-400">
+                  <span class="hidden sm:inline">components/</span>BorderBeam.vue
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>3D 视差互动</span>
+              </div>
             </div>
-            <div class="flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>复制即用</span>
-            </div>
-          </div>
 
-          <!-- Terminal 交互代码展示 -->
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
-            <div class="space-y-1 text-zinc-600 dark:text-zinc-300">
-              <p><span class="text-purple-500">&lt;template&gt;</span></p>
-              <p class="pl-4">
-                <span class="text-blue-500">&lt;div</span> <span class="text-amber-500">class=</span><span class="text-emerald-500">"relative rounded-2xl"</span><span class="text-blue-500">&gt;</span>
-              </p>
-              <p class="pl-8">
-                <span class="text-blue-500">&lt;BorderBeam</span> <span class="text-amber-500">:duration=</span><span class="text-emerald-500">"5"</span> <span class="text-amber-500">:border-width=</span><span class="text-emerald-500">"2"</span> <span class="text-blue-500">/&gt;</span>
-              </p>
-              <p class="pl-4"><span class="text-blue-500">&lt;/div&gt;</span></p>
-              <p><span class="text-purple-500">&lt;/template&gt;</span></p>
+            <!-- Terminal 交互代码展示 -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+              <div class="space-y-1 text-zinc-600 dark:text-zinc-300">
+                <p><span class="text-purple-500">&lt;template&gt;</span></p>
+                <p class="pl-4">
+                  <span class="text-blue-500">&lt;div</span> <span class="text-amber-500">class=</span><span class="text-emerald-500">"relative rounded-2xl"</span><span class="text-blue-500">&gt;</span>
+                </p>
+                <p class="pl-8">
+                  <span class="text-blue-500">&lt;BorderBeam</span> <span class="text-amber-500">:duration=</span><span class="text-emerald-500">"5"</span> <span class="text-amber-500">:border-width=</span><span class="text-emerald-500">"2"</span> <span class="text-blue-500">/&gt;</span>
+                </p>
+                <p class="pl-4"><span class="text-blue-500">&lt;/div&gt;</span></p>
+                <p><span class="text-purple-500">&lt;/template&gt;</span></p>
+              </div>
+              <router-link
+                :to="'/docs/' + getLastVisitedDocId()"
+                class="w-full sm:w-auto text-center shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
+              >
+                查看全部 {{ COMPONENTS_DATA.length }} 个组件 &rarr;
+              </router-link>
             </div>
-            <router-link
-              :to="'/docs/' + getLastVisitedDocId()"
-              class="w-full sm:w-auto text-center shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
-            >
-              查看全部 {{ COMPONENTS_DATA.length }} 个组件 &rarr;
-            </router-link>
           </div>
-        </div>
+        </TiltCard>
       </div>
     </section>
 
@@ -713,7 +730,7 @@ function openSearchModal() {
 
                 <!-- 1.3 极光流光渐变 (hero-aurora-gradient) -->
                 <div v-else-if="block.id === 'hero-aurora-gradient'" class="relative w-full h-full flex flex-col items-center justify-center text-center p-3 overflow-hidden">
-                  <div class="absolute inset-0 bg-gradient-to-r from-teal-500/30 via-purple-600/30 to-rose-500/30 blur-2xl animate-pulse" />
+                  <div class="absolute inset-0 bg-gradient-to-r from-teal-500/30 via-purple-600/30 to-rose-500/30 blur-2xl animate-aurora" />
                   <div class="relative z-10 text-[10px] font-mono text-teal-300 font-semibold mb-1">Aurora Fluid Mesh</div>
                   <div class="relative z-10 text-base sm:text-lg font-black text-white tracking-tight bg-gradient-to-r from-teal-200 via-purple-200 to-pink-200 bg-clip-text text-transparent">
                     极光流光破晓
@@ -736,10 +753,10 @@ function openSearchModal() {
                   <div class="relative z-10 mt-1 text-[10px] text-zinc-400 max-w-[220px] truncate">
                     High-converting responsive hero sections
                   </div>
-                  <!-- 模拟微缩输入交互框 -->
+                  <!-- 模拟微缩输入交互框 (带打字机脉冲光标) -->
                   <div class="relative z-10 mt-3 w-full max-w-[240px] px-2.5 py-1.5 rounded-lg border border-zinc-700/80 bg-zinc-900/90 shadow-lg flex items-center justify-between text-[10px] text-zinc-400">
-                    <span class="truncate">Ask AI to generate layout...</span>
-                    <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-mono text-[9px]">Run</span>
+                    <span class="truncate">Ask AI to generate layout<span class="inline-block w-1.5 h-3 bg-blue-500 animate-pulse ml-0.5 align-middle" /></span>
+                    <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-mono text-[9px] hover:scale-105 transition-transform">Run</span>
                   </div>
                 </div>
               </div>
@@ -860,6 +877,8 @@ function openSearchModal() {
                     </defs>
                     <path d="M0,45 Q30,15 60,35 T120,20 T170,40 T200,10 L200,60 L0,60 Z" fill="url(#chartGrad)" />
                     <path d="M0,45 Q30,15 60,35 T120,20 T170,40 T200,10" fill="none" stroke="#3b82f6" stroke-width="2" />
+                    <circle cx="200" cy="10" r="5" fill="#38bdf8" class="animate-ping opacity-75" />
+                    <circle cx="200" cy="10" r="3" fill="#60a5fa" />
                   </svg>
                 </div>
               </div>
@@ -1083,3 +1102,42 @@ function openSearchModal() {
     </section>
   </div>
 </template>
+
+<style scoped>
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes aurora-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-aurora {
+  background-size: 200% 200%;
+  animation: aurora-flow 8s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-aurora {
+    animation: none !important;
+  }
+}
+</style>
