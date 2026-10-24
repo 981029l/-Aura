@@ -1,0 +1,103 @@
+const n=`<script setup lang="ts">
+import { MessageSquareQuote } from 'lucide-vue-next'
+import StarRating from '@/components/ui/StarRating.vue'
+
+const testimonials = [
+  {
+    author: 'Guillermo R.',
+    role: 'CEO & Founder @ CloudScale',
+    quote: '我们在短短两周内把整个管理中台的 40 多个业务报表重构为了纯 Vue 3.5 单文件架构。页面首屏加载体积压缩了 64%，客户 NPS 评分达到了历史新高。',
+    score: 5,
+    tag: 'SaaS 重构',
+  },
+  {
+    author: 'Clara Chen',
+    role: 'Design Technologist @ MetaLab',
+    quote: '设计系统团队最大的痛苦在于还原微动效。Aura UI 的每一个卡片与弹窗动效都带有极度丝滑的弹性阻尼，设计师再也不用在验收会上抓狂了。',
+    score: 5,
+    tag: '设计系统',
+  },
+  {
+    author: 'Jonas Weber',
+    role: 'Principal Architect @ Berlin FinTech',
+    quote: '金融级高可用容灾与全息钛金黑卡组件简直是艺术品。不仅好看，底层代码类型推导也非常扎实，通过了我们内部严格的静态安全扫描。',
+    score: 5,
+    tag: '金融合规',
+  },
+  {
+    author: 'Aria Montgomery',
+    role: 'Lead AI Engineer @ Cortex',
+    quote: '我们直接拿推测解码和向量空间投影组件搭建了内部的大模型演练场。免去了几个月自己手写 WebGL 和 Canvas 的工作量。',
+    score: 5,
+    tag: 'AI 智能体',
+  },
+  {
+    author: 'Siddharth Patel',
+    role: 'Growth Hacker @ DevBoost',
+    quote: '高转化率分屏注册表单与 3D 终端首屏让我们的产品落地页注册转化率从 3.2% 飙升到了 8.7%！简直是独立开发者的增长神器。',
+    score: 5,
+    tag: '增长转化',
+  },
+  {
+    author: 'Tatsuro Yamashita',
+    role: 'Senior Frontend @ CyberWorks Tokyo',
+    quote: '代码绝对纯粹，没有任何私货依赖。我们可以随时按需把单文件组件复制进项目目录，随意修改 Tailwind 类名，完全掌控所有权。',
+    score: 5,
+    tag: '工程纯度',
+  },
+]
+<\/script>
+
+<template>
+  <div class="relative w-full overflow-hidden bg-zinc-50 py-16 sm:py-24 dark:bg-black transition-colors">
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- 头部说明 -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/20 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-xs font-semibold mb-4">
+          <MessageSquareQuote class="w-3.5 h-3.5" />
+          <span>深度评价 · 瀑布流长文背书</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
+          来自各行各业的
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 dark:from-indigo-400 dark:to-cyan-400">
+            一线专家深度反馈
+          </span>
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
+          听听来自初创先锋、设计系统专家与跨国金融技术总监的实战经验分享。
+        </p>
+      </div>
+
+      <!-- 瀑布流三列卡片布局 -->
+      <div class="max-w-6xl mx-auto columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 text-left">
+        <div
+          v-for="t in testimonials"
+          :key="t.author"
+          class="break-inside-avoid p-6 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 shadow-md hover:shadow-xl transition-all duration-300"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <StarRating :modelValue="t.score" :readonly="true" color="#f59e0b" />
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+              #{{ t.tag }}
+            </span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+            "{{ t.quote }}"
+          </p>
+
+          <div class="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0">
+              {{ t.author[0] }}
+            </div>
+            <div>
+              <div class="text-xs font-bold text-zinc-900 dark:text-white">{{ t.author }}</div>
+              <div class="text-[11px] text-zinc-500">{{ t.role }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+`;export{n as default};
