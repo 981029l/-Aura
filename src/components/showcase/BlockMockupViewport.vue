@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick, computed } from 'vue'
+import { useDark } from '@vueuse/core'
 import { ExternalLink } from 'lucide-vue-next'
 
 interface Props {
@@ -9,9 +10,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const isDark = useDark()
 const viewportRef = ref<HTMLDivElement | null>(null)
 const scale = ref(0.45)
 const isLoaded = ref(false)
+
+const iframeSrc = computed(() => `/preview/${props.blockId}?dark=${isDark.value}`)
 
 let ro: ResizeObserver | null = null
 
@@ -78,7 +82,7 @@ onUnmounted(() => {
 
       <!-- 真实全屏组件 iframe 1:1 动态缩放 -->
       <iframe
-        :src="'/preview/' + blockId + '?dark=true'"
+        :src="iframeSrc"
         class="absolute top-0 left-0 border-none pointer-events-none origin-top-left transition-opacity duration-500"
         :class="isLoaded ? 'opacity-100' : 'opacity-0'"
         :style="{
@@ -94,8 +98,9 @@ onUnmounted(() => {
       <router-link
         :to="'/preview/' + blockId"
         target="_blank"
-        class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4 z-10 cursor-pointer"
-        title="新窗口全屏独立实景体验"
+        class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none transition-opacity duration-300 flex items-end justify-between p-4 z-10 cursor-pointer"
+        :aria-label="`在新窗口全屏实景体验 ${title || blockId}`"
+        :title="`在新窗口全屏实景体验 ${title || blockId}`"
       >
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-xl transition-transform hover:scale-105 active:scale-95">
           <span>在新窗口全屏实景体验</span>

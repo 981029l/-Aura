@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import {
   ArrowRight,
   Sparkles,
@@ -577,14 +577,21 @@ function openSearchModal() {
         </p>
       </div>
 
-      <!-- 8 大业务场景交互切换 Tabs（移动端 2 列工整网格，桌面端流式居中胶囊，0 滚动条，0 截断） -->
-      <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 max-w-5xl mx-auto">
+      <!-- 8 大业务场景交互切换 Tabs（移动端 2 列工整网格，桌面端流式居中胶囊，0 滚动条，0 截断，WCAG 2.5.5 热区适配） -->
+      <div
+        role="tablist"
+        aria-label="场景套件分类"
+        class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 max-w-5xl mx-auto"
+      >
         <button
           v-for="suite in BLOCK_SUITES"
           :key="suite.id"
           type="button"
+          role="tab"
+          :aria-selected="activeSuiteId === suite.id"
+          :aria-controls="'suite-panel-' + suite.id"
           @click="activeSuiteId = suite.id"
-          class="group relative inline-flex items-center justify-between sm:justify-center gap-1.5 sm:gap-2 px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer select-none"
+          class="group relative inline-flex items-center justify-between sm:justify-center gap-1.5 sm:gap-2 px-3 py-2.5 sm:px-4 sm:py-2.5 min-h-[44px] rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer select-none"
           :class="
             activeSuiteId === suite.id
               ? 'bg-zinc-950 text-white shadow-md shadow-zinc-950/15 dark:bg-white dark:text-zinc-950 scale-[1.01]'
@@ -666,7 +673,7 @@ function openSearchModal() {
                 </div>
               </div>
 
-              <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h3 class="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug break-words">
                 {{ block.title }}
               </h3>
 
@@ -675,11 +682,11 @@ function openSearchModal() {
               </p>
             </div>
 
-            <!-- 底部双行动通道 -->
+            <!-- 底部双行动通道（WCAG 触控体验增强） -->
             <div class="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between gap-3 text-xs">
               <router-link
                 :to="'/blocks/' + block.id"
-                class="inline-flex items-center gap-1 font-semibold text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors"
+                class="inline-flex items-center gap-1.5 py-1.5 font-semibold text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors"
               >
                 <span>查看源码与架构</span>
                 <ArrowRight class="w-3.5 h-3.5" />
@@ -688,8 +695,9 @@ function openSearchModal() {
               <router-link
                 :to="'/preview/' + block.id"
                 target="_blank"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 font-semibold dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shadow-sm"
-                title="新标签页全屏独立实景体验"
+                class="inline-flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 font-semibold dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shadow-sm"
+                :title="'在独立新窗口全屏实景体验 ' + block.title"
+                :aria-label="'在独立新窗口全屏实景体验 ' + block.title"
               >
                 <span>实景全屏预览</span>
                 <ExternalLink class="w-3.5 h-3.5 text-zinc-400 group-hover:text-blue-500" />
