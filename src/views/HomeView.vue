@@ -17,6 +17,12 @@ import {
   LayoutGrid,
   Cpu,
   Code2,
+  Rocket,
+  CreditCard,
+  MessageSquareQuote,
+  Bot,
+  LayoutDashboard,
+  PanelBottom,
 } from 'lucide-vue-next'
 import { COMPONENTS_DATA, getLastVisitedDocId } from '@/data/components'
 import { BLOCK_SUITES, BLOCKS_DATA, getLastVisitedBlockId } from '@/data/blocks'
@@ -45,6 +51,17 @@ const homeBeamDb = ref<HTMLDivElement | null>(null)
 const activeSuiteId = ref<string>(BLOCK_SUITES[0].id)
 const activeSuite = computed(() => BLOCK_SUITES.find((s) => s.id === activeSuiteId.value) || BLOCK_SUITES[0])
 const activeSuiteBlocks = computed(() => BLOCKS_DATA.filter((b) => b.suiteId === activeSuiteId.value).slice(0, 4))
+
+const suiteIconMap: Record<string, any> = {
+  'marketing-hero': Rocket,
+  'marketing-features': Layers,
+  'marketing-pricing': CreditCard,
+  'marketing-testimonials': MessageSquareQuote,
+  'ai-consoles': Bot,
+  'saas-dashboards': LayoutDashboard,
+  'auth-onboarding': ShieldCheck,
+  'footers-cta': PanelBottom,
+}
 
 const techLogos = [
   'Vue 3.5+',
@@ -497,41 +514,52 @@ function copyInstallGuide() {
     </section>
 
     <!-- ================= 4. 全栈场景区块 109 款工业级实景展台 ================= -->
-    <section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-200/80 dark:border-zinc-800/80">
-      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4">
+    <section id="scene-blocks" class="scroll-mt-28 pt-24 sm:pt-28 pb-20 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-200/80 dark:border-zinc-800/80">
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12 space-y-3">
         <div class="inline-flex items-center gap-2 rounded-full border border-indigo-200/80 bg-indigo-50/50 px-3.5 py-1 text-xs font-semibold text-indigo-600 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-400">
           <LayoutGrid class="h-3.5 w-3.5" />
           <span>企业级场景区块生态</span>
         </div>
-        <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-950 dark:text-zinc-50 [text-wrap:balance]">
-          全栈场景区块 · 109 款工业级生产就绪模块
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-zinc-50 leading-snug sm:leading-tight pt-1">
+          全栈场景区块
+          <span class="text-zinc-400 dark:text-zinc-500 font-normal mx-1 text-xl sm:text-2xl">·</span>
+          <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-indigo-300">
+            109 款工业级生产就绪模块
+          </span>
         </h2>
-        <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
+        <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
           不仅提供精细动效原子，更提供开箱即用的成套业务场景。涵盖 AI Agent 工作台、SaaS 数据大盘、高转化定价矩阵与入职引导流。
         </p>
       </div>
 
-      <!-- 8 大业务场景交互切换 Tabs -->
-      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 no-scrollbar">
+      <!-- 8 大业务场景交互切换 Tabs（移动端 2 列工整网格，桌面端流式居中胶囊，0 滚动条，0 截断） -->
+      <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 max-w-5xl mx-auto">
         <button
           v-for="suite in BLOCK_SUITES"
           :key="suite.id"
           type="button"
           @click="activeSuiteId = suite.id"
-          class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer"
+          class="group relative inline-flex items-center justify-between sm:justify-center gap-1.5 sm:gap-2 px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer select-none"
           :class="
             activeSuiteId === suite.id
-              ? 'bg-zinc-900 text-white shadow-md dark:bg-white dark:text-black scale-[1.02]'
-              : 'border border-zinc-200 bg-white/70 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white'
+              ? 'bg-zinc-950 text-white shadow-md shadow-zinc-950/15 dark:bg-white dark:text-zinc-950 scale-[1.01]'
+              : 'border border-zinc-200/90 bg-white/80 text-zinc-600 hover:border-zinc-300 hover:bg-zinc-100/90 hover:text-zinc-950 dark:border-zinc-800/90 dark:bg-zinc-900/70 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-white'
           "
         >
-          <span>{{ suite.name }}</span>
+          <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <component
+              :is="suiteIconMap[suite.id] || LayoutGrid"
+              class="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:scale-110"
+              :class="activeSuiteId === suite.id ? 'text-blue-400 dark:text-blue-600' : 'text-zinc-400 group-hover:text-zinc-700 dark:text-zinc-500 dark:group-hover:text-zinc-300'"
+            />
+            <span class="tracking-tight truncate">{{ suite.name }}</span>
+          </div>
           <span
-            class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
+            class="px-1.5 py-0.5 rounded-full text-[10px] font-mono leading-none shrink-0"
             :class="
               activeSuiteId === suite.id
-                ? 'bg-white/20 text-white dark:bg-black/10 dark:text-black'
-                : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+                ? 'bg-white/20 text-white dark:bg-black/15 dark:text-black font-bold'
+                : 'bg-zinc-100 text-zinc-500 group-hover:bg-zinc-200/70 dark:bg-zinc-800 dark:text-zinc-400'
             "
           >
             {{ suite.count }}
@@ -540,15 +568,20 @@ function copyInstallGuide() {
       </div>
 
       <!-- 当前场景套件全景简介卡 -->
-      <div class="mt-6 p-5 sm:p-6 rounded-2xl border border-zinc-200/90 bg-gradient-to-r from-zinc-50 via-white to-zinc-50 dark:border-zinc-800/90 dark:from-zinc-950 dark:via-zinc-900/50 dark:to-zinc-950 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div class="space-y-1">
-          <div class="flex items-center gap-2">
-            <span class="text-sm font-bold text-zinc-900 dark:text-zinc-100">{{ activeSuite.name }}</span>
-            <span class="text-xs font-mono text-zinc-400 uppercase">/ {{ activeSuite.englishName }}</span>
+      <div class="mt-8 p-5 sm:p-6 rounded-2xl border border-zinc-200/90 bg-gradient-to-r from-zinc-50 via-white to-zinc-50 dark:border-zinc-800/90 dark:from-zinc-950 dark:via-zinc-900/50 dark:to-zinc-950 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50">
+            <component :is="suiteIconMap[activeSuite.id] || LayoutGrid" class="h-5 w-5" />
           </div>
-          <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-3xl">
-            {{ activeSuite.description }}
-          </p>
+          <div class="space-y-1">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2">
+              <span class="text-sm font-bold text-zinc-900 dark:text-zinc-100">{{ activeSuite.name }}</span>
+              <span class="text-[10px] sm:text-xs font-mono text-zinc-400 uppercase tracking-wide">/ {{ activeSuite.englishName }}</span>
+            </div>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-3xl leading-relaxed">
+              {{ activeSuite.description }}
+            </p>
+          </div>
         </div>
         <router-link
           :to="'/blocks/' + activeSuiteBlocks[0]?.id"
