@@ -87,16 +87,18 @@ watch(
         <div class="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-200/80 bg-zinc-900 shadow-md shadow-blue-500/10 transition-transform duration-300 group-hover:scale-105 dark:border-zinc-800">
           <img src="/logo.png" alt="Aura UI Logo" class="h-full w-full object-cover" />
         </div>
-        <div class="flex flex-col">
-          <div class="flex items-center gap-1.5">
-            <span class="text-lg font-black tracking-tight text-zinc-900 dark:text-white">
+        <div class="flex flex-col justify-center min-w-0">
+          <div class="flex items-center gap-1.5 leading-none">
+            <span class="text-base sm:text-lg font-black tracking-tight text-zinc-900 dark:text-white">
               Aura<span class="text-blue-600 dark:text-blue-400">UI</span>
             </span>
-            <span class="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-950/80 dark:text-blue-300">
-              v1.0
+            <span class="rounded-full bg-blue-100 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-blue-700 dark:bg-blue-950/80 dark:text-blue-300">
+              v1.2
             </span>
           </div>
-          <span class="text-[10px] text-zinc-400">Vue 3 动效组件库</span>
+          <span class="text-[11px] leading-snug text-zinc-500 dark:text-zinc-400 whitespace-nowrap mt-0.5 font-normal">
+            Vue 3 动效组件库
+          </span>
         </div>
       </router-link>
 

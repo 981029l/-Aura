@@ -93,37 +93,37 @@ function openSearchModal() {
 <template>
   <div class="relative overflow-hidden">
     <!-- ================= 1. HERO 科技大秀场 ================= -->
-    <section class="relative min-h-[85vh] flex flex-col items-center justify-center px-4 pt-16 pb-20 text-center overflow-hidden">
+    <section class="relative flex flex-col items-center justify-start px-4 pt-8 sm:pt-12 pb-16 text-center overflow-hidden">
       <!-- 3D 复古科技网格作为 Hero 纵深背景 -->
       <RetroGrid :angle="65" :opacity="0.45" />
 
-      <!-- 顶部徽章 Badge (内嵌官方积木仔 Mascot，灵动精致) -->
-      <div class="relative z-10 mb-6 inline-flex items-center gap-2.5 rounded-full border border-zinc-200/90 bg-white/80 pl-2 pr-3.5 py-1 text-xs font-semibold text-zinc-800 shadow-sm backdrop-blur-md dark:border-zinc-800/90 dark:bg-zinc-900/80 dark:text-zinc-200 transition-all hover:scale-105 hover:border-blue-500/40 cursor-default">
-        <img src="/logo.png" alt="Aura Mascot" class="h-5 w-5 rounded-md shadow-xs object-cover" />
-        <ShinyText text="Aura 3.5 动效库与场景区块" class="font-bold tracking-tight" />
+      <!-- 顶部徽章 Badge (精致轻盈，与 Header 统一版本) -->
+      <div class="relative z-10 mb-5 inline-flex items-center gap-2.5 rounded-full border border-zinc-200/90 bg-white/80 pl-2 pr-3.5 py-1 text-xs font-semibold text-zinc-800 shadow-sm backdrop-blur-md dark:border-zinc-800/90 dark:bg-zinc-900/80 dark:text-zinc-200 transition-all hover:scale-105 hover:border-blue-500/40 cursor-default">
+        <img src="/logo.png" alt="Aura Mascot" width="18" height="18" class="h-5 w-5 rounded-md shadow-xs object-cover shrink-0" />
+        <ShinyText text="面向 Vue 3 的动效组件库与场景区块" class="font-bold tracking-tight" />
         <span class="rounded-full bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">
-          v1.2 工业级
+          v1.2
         </span>
       </div>
 
       <!-- 核心大标题 -->
-      <h1 class="relative z-10 max-w-4xl text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.12] sm:leading-[1.15] [text-wrap:balance]">
+      <h1 class="relative z-10 max-w-4xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.15] sm:leading-[1.18] [text-wrap:balance]">
         <span class="text-zinc-950 dark:text-white">为 Vue 3 精心打造的</span>
-        <span class="block mt-2 sm:mt-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300 font-extrabold tracking-tight">
+        <span class="block mt-1.5 sm:mt-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-indigo-300 dark:to-purple-300 font-extrabold tracking-tight">
           交互动效与场景区块
         </span>
       </h1>
 
       <!-- 痛点与定位描述 -->
-      <p class="relative z-10 mx-auto mt-6 max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400 leading-relaxed">
+      <p class="relative z-10 mx-auto mt-5 max-w-2xl text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
         专为 <strong>AI 原生产品、SaaS 官网与企业级大盘</strong> 定制的高帧率 Web 交互基础设施。<br class="hidden sm:inline" />
         <span class="font-medium text-zinc-900 dark:text-zinc-200">232 款动效组件 + 109 款场景区块</span>，单文件独立自包含，复制即跑。
       </p>
 
       <!-- 核心行动按钮 (CTA) -->
-      <div class="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4">
+      <div class="relative z-10 mt-7 flex flex-wrap items-center justify-center gap-3.5">
         <router-link :to="'/docs/' + getLastVisitedDocId()">
-          <ShimmerButton shimmer-color="#60a5fa" class="h-12 px-8 text-base shadow-lg shadow-blue-500/20">
+          <ShimmerButton shimmer-color="#60a5fa" class="h-11 px-7 text-sm sm:text-base shadow-lg shadow-blue-500/20">
             <span>浏览组件库</span>
             <ArrowRight class="h-4 w-4" />
           </ShimmerButton>
@@ -131,7 +131,7 @@ function openSearchModal() {
 
         <button
           type="button"
-          class="inline-flex h-12 items-center gap-2 rounded-full border border-zinc-200 bg-white/90 px-6 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur-md transition-all hover:bg-zinc-100 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+          class="inline-flex h-11 items-center gap-2 rounded-full border border-zinc-200 bg-white/90 px-5 text-sm font-semibold text-zinc-900 shadow-sm backdrop-blur-md transition-all hover:bg-zinc-100 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
           @click="copyInstallGuide"
         >
           <Check v-if="heroCardCopied" class="h-4 w-4 text-emerald-500" />
@@ -141,11 +141,11 @@ function openSearchModal() {
       </div>
 
       <!-- Supahero 风格全局快速搜索探索胶囊栏 -->
-      <div class="relative z-10 mt-6 w-full max-w-lg mx-auto">
+      <div class="relative z-10 mt-5 w-full max-w-lg mx-auto">
         <button
           type="button"
           @click="openSearchModal"
-          class="group relative flex w-full items-center justify-between rounded-2xl border border-zinc-200/90 bg-white/80 px-4 py-3 text-xs sm:text-sm text-zinc-500 shadow-lg shadow-zinc-950/5 backdrop-blur-xl transition-all duration-200 hover:border-blue-500/50 hover:bg-white hover:text-zinc-900 hover:shadow-blue-500/10 dark:border-zinc-800/90 dark:bg-zinc-900/70 dark:text-zinc-400 dark:hover:border-blue-500/50 dark:hover:bg-zinc-900 dark:hover:text-zinc-100 cursor-pointer"
+          class="group relative flex w-full items-center justify-between rounded-2xl border border-zinc-200/90 bg-white/80 px-4 py-2.5 text-xs sm:text-sm text-zinc-500 shadow-lg shadow-zinc-950/5 backdrop-blur-xl transition-all duration-200 hover:border-blue-500/50 hover:bg-white hover:text-zinc-900 hover:shadow-blue-500/10 dark:border-zinc-800/90 dark:bg-zinc-900/70 dark:text-zinc-400 dark:hover:border-blue-500/50 dark:hover:bg-zinc-900 dark:hover:text-zinc-100 cursor-pointer"
         >
           <div class="flex items-center gap-3 truncate">
             <Search class="h-4 w-4 text-zinc-400 group-hover:text-blue-500 transition-colors shrink-0" />
@@ -160,7 +160,7 @@ function openSearchModal() {
       </div>
 
       <!-- 4 大核心特征标签胶囊 -->
-      <div class="relative z-10 mt-5 flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+      <div class="relative z-10 mt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
         <span class="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/60 px-3 py-1 shadow-2xs backdrop-blur-xs dark:border-zinc-800 dark:bg-zinc-900/60">
           <span class="h-1.5 w-1.5 rounded-full bg-blue-500" />
           232+ 动效组件
