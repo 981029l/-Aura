@@ -76,7 +76,7 @@ export const BLOCK_SUITES: BlockSuite[] = [
     id: 'footers-cta',
     name: '页脚导航与行动号召',
     englishName: 'Footers & Call to Action Banners',
-    description: '极光破晓流光 CTA 横幅、开发者 CLI 快速复制行动条、多列企业级 SaaS 巨型页脚与合规免责声明。',
+    description: '极光破晓流光 CTA 横幅、开发者命令复制条、多列企业级 SaaS 巨型页脚与合规免责声明。',
     badgeColor: 'text-teal-500 bg-teal-500/10 border-teal-500/20',
     iconName: 'Compass',
     count: 10,
@@ -1133,10 +1133,10 @@ export const BLOCKS_DATA: BlockDoc[] = [
   {
     id: 'footer-developer-cli-cta',
     name: 'FooterDeveloperCliCta',
-    title: '开发者终端命令极速起步 CTA（Footer Developer CLI CTA）',
+    title: '开发者快速开始 CTA（Footer Developer CLI CTA）',
     suiteId: 'footers-cta',
     category: 'Footer',
-    description: '居中代码胶囊 `npm create aura-ui@latest`，点击一键复制并闪现成功反馈。',
+    description: '居中代码胶囊展示用 Vite 创建 Vue 3 项目的命令，可切换 pnpm / npm / bun，点击即可复制。',
     blockFilename: 'FooterDeveloperCliCta.vue',
     tags: ['Footer', 'CLI', 'CopySnippet']
   },

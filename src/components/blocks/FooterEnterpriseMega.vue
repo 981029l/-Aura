@@ -8,11 +8,11 @@ const megaSections = [
   {
     title: '产品与架构',
     links: [
-      { name: '109 款场景区块', href: '#blocks', badge: 'New' },
-      { name: '182 款原子动效组件', href: '#components' },
+      { name: '场景区块', href: '#blocks', badge: 'New' },
+      { name: '动效组件', href: '#components' },
       { name: 'Vue 3.5 编译优化', href: '#compiler' },
       { name: 'Tailwind 原生双模', href: '#theming' },
-      { name: 'CLI 脚手架工具', href: '#cli' },
+      { name: '安装指南', href: '#install' },
     ]
   },
   {

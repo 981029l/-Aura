@@ -4,15 +4,16 @@ import CopySnippet from '@/components/ui/CopySnippet.vue'
 import TypewriterTerminal, { type TerminalLine } from '@/components/ui/TypewriterTerminal.vue'
 
 const devFeatures = [
-  '零运行时依赖，原生 Web 动画与 Tailwind 原生渲染',
-  '严格 TypeScript 类型推导，100% SFC 单文件组件架构',
-  '自动树摇 (Tree-shaking)，打包体积微乎其微',
+  '只依赖 @vueuse/core、clsx 和 tailwind-merge',
+  '使用 TypeScript 编写的 Vue 单文件组件',
+  '只复制用到的组件，不会打包多余代码',
 ]
 
 const terminalScript: TerminalLine[] = [
-  { type: 'input', prefix: '$ ', text: 'npx aura-ui add hero-dashboard-preview' },
-  { type: 'info', text: '⠋ Resolving dependencies and checking AST...' },
-  { type: 'output', text: '✔ Created src/components/blocks/HeroDashboardPreview.vue' },
+  { type: 'input', prefix: '$ ', text: 'pnpm add @vueuse/core clsx tailwind-merge' },
+  { type: 'info', text: '⠋ Installing dependencies...' },
+  { type: 'output', text: '✔ Added @vueuse/core, clsx, tailwind-merge' },
+  { type: 'input', prefix: '$ ', text: 'cp ../aura-ui/src/components/ui/BorderBeam.vue src/components/ui/' },
   { type: 'input', prefix: '$ ', text: 'pnpm run dev' },
   { type: 'output', text: '  VITE v6.4.5 ready in 180 ms' },
   { type: 'output', text: '  ➜  Local:   http://localhost:3000/' },
@@ -31,25 +32,25 @@ const terminalScript: TerminalLine[] = [
         <div class="lg:col-span-6 flex flex-col items-start text-left">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-400 text-xs font-mono font-medium backdrop-blur-md mb-6">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>CLI v2.4 现已发布</span>
+            <span>复制源码即可使用</span>
           </div>
 
           <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
             代码即一切。<br />
-            专为极客打造的
+            为开发者准备的
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-              极速 UI 工作流
+              组件工作流
             </span>
           </h1>
 
           <p class="mt-6 text-sm sm:text-base text-zinc-400 leading-relaxed max-w-xl">
-            告别传统臃肿打包黑盒。直接复制整洁、现代的纯 Vue 3.5 单文件组件代码到你的项目目录，完全拥有 100% 的掌控权。
+            不需要安装组件库。安装三个依赖后，把 Vue 3 单文件组件的源码复制到项目里，之后可以随意修改。
           </p>
 
-          <!-- 一键 CLI 安装复制框：集成 CopySnippet 原子组件 -->
+          <!-- 依赖安装命令复制框：集成 CopySnippet 组件 -->
           <div class="mt-8 w-full max-w-md">
             <CopySnippet
-              code="npx aura-ui init my-awesome-app"
+              code="pnpm add @vueuse/core clsx tailwind-merge"
               prefix="$"
               class="w-full justify-between !bg-zinc-900/90 !border-zinc-800 text-emerald-400"
             />
@@ -70,7 +71,7 @@ const terminalScript: TerminalLine[] = [
               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs sm:text-sm transition-all shadow-md active:scale-95"
             >
               <Terminal class="w-4 h-4" />
-              <span>阅读 CLI 文档</span>
+              <span>阅读使用文档</span>
               <ArrowRight class="w-3.5 h-3.5" />
             </a>
             <span class="text-xs font-mono text-zinc-500">支持 pnpm / npm / yarn / bun</span>
@@ -84,7 +85,7 @@ const terminalScript: TerminalLine[] = [
             <div class="absolute -top-10 -right-10 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none"></div>
 
             <TypewriterTerminal
-              title="bash · Aura CLI Installer"
+              title="bash · 安装依赖并复制组件"
               :lines="terminalScript"
               :typingSpeed="25"
               class="w-full border-0 !bg-transparent"

@@ -4,9 +4,9 @@ import CodeWindow from '@/components/ui/CodeWindow.vue'
 import CopySnippet from '@/components/ui/CopySnippet.vue'
 
 const sdkAdvantages = [
-  '零外部配置依赖，完全原生 Vue 3.5 + Tailwind CSS SFC 单文件组件',
-  '全面支持 Vite 6、Nuxt 3、Astro 与微前端动态挂载',
-  '内置 TypeScript 声明与完备的 JSDoc 参数提示',
+  '基于 Vue 3 + Tailwind CSS 的单文件组件，复制即可使用',
+  '可以在 Vite、Nuxt 等 Vue 3 项目中使用',
+  'Props 和事件都有 TypeScript 类型定义',
 ]
 </script>
 
@@ -18,24 +18,24 @@ const sdkAdvantages = [
         <div class="lg:col-span-5 flex flex-col items-start text-left">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 text-xs font-mono mb-6">
             <Terminal class="w-3.5 h-3.5" />
-            <span>NPM REGISTRY · VUE 3.5+</span>
+            <span>COPY &amp; PASTE · VUE 3</span>
           </div>
 
           <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-white leading-[1.15]">
-            极简开发者 SDK
+            复制源码即可使用
             <span class="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500">
-              三行代码即刻运行
+              只需安装三个依赖
             </span>
           </h2>
 
           <p class="mt-6 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg">
-            告别传统组件库庞大的安装包体积与繁杂插件注册流程。直接通过 Aura CLI 命令，将纯净的原生单文件组件复制进项目，按需即用。
+            组件不通过 npm 包分发。先安装下面这三个依赖，再把需要的组件源码复制到项目的 src/components/ui 目录即可使用。
           </p>
 
           <!-- 快速安装命令：集成 CopySnippet 原子组件 -->
           <div class="mt-6 w-full max-w-md">
             <CopySnippet
-              code="pnpm add @aura-ui/core"
+              code="pnpm add @vueuse/core clsx tailwind-merge"
               prefix="$"
               class="w-full justify-between"
             />
@@ -57,7 +57,7 @@ const sdkAdvantages = [
         <!-- 右侧：真实代码预览窗口：集成 CodeWindow 原子组件 -->
         <div class="lg:col-span-7 w-full">
           <CodeWindow
-            title="App.vue · 即插即用"
+            title="示例代码"
             initialTab="BorderBeam.vue"
             class="shadow-2xl"
           />

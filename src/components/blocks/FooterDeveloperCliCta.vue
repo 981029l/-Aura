@@ -6,9 +6,9 @@ import CopySnippet from '@/components/ui/CopySnippet.vue'
 const activePm = ref<'pnpm' | 'npm' | 'bun'>('pnpm')
 
 const cliCommands = {
-  pnpm: 'pnpm create aura-ui@latest my-app',
-  npm: 'npm create aura-ui@latest my-app',
-  bun: 'bun create aura-ui@latest my-app',
+  pnpm: 'pnpm create vite@latest my-app --template vue-ts',
+  npm: 'npm create vite@latest my-app -- --template vue-ts',
+  bun: 'bun create vite my-app --template vue-ts',
 }
 
 const currentCommand = computed(() => cliCommands[activePm.value])
@@ -23,15 +23,15 @@ const currentCommand = computed(() => cliCommands[activePm.value])
       <!-- 头部说明 -->
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-6">
         <Terminal class="w-3.5 h-3.5" />
-        <span>一行命令 · 零配置即刻生成脚手架</span>
+        <span>用 Vite 创建 Vue 3 项目</span>
       </div>
 
       <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white">
-        准备好开始构建下一代应用了吗？
+        准备好开始了吗？
       </h2>
 
       <p class="mt-4 text-sm sm:text-base text-zinc-400 max-w-xl mx-auto">
-        在您的终端中执行以下命令，秒级获得开箱即用的 Vue 3.5 + Tailwind CSS + Aura 全量组件环境。
+        先用下面的命令创建一个 Vue 3 + TypeScript 项目，配置好 Tailwind CSS，再把需要的 Aura UI 组件复制进去。
       </p>
 
       <!-- 包管理器切换 Pills -->
@@ -69,14 +69,14 @@ const currentCommand = computed(() => cliCommands[activePm.value])
         </div>
         <div class="text-emerald-400 flex items-center gap-2 pt-1">
           <Check class="w-3.5 h-3.5" />
-          <span>Resolved 109 Blocks & 182 Components metadata</span>
+          <span>Scaffolding project in ./my-app...</span>
         </div>
         <div class="text-zinc-300">
-          <span>✔ Scaffolding project in ./my-app...</span>
+          <span>Done. Now run:</span>
         </div>
         <div class="text-sky-400 flex items-center gap-1.5">
           <Code class="w-3.5 h-3.5" />
-          <span>Ready in 420ms! Run: cd my-app && pnpm dev</span>
+          <span>cd my-app && pnpm install && pnpm dev</span>
         </div>
       </div>
 
@@ -84,7 +84,7 @@ const currentCommand = computed(() => cliCommands[activePm.value])
       <div class="mt-8 flex items-center justify-center gap-4 text-xs">
         <a href="#quickstart" class="inline-flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-semibold">
           <Sparkles class="w-3.5 h-3.5" />
-          <span>查看完整 CLI 指南手册</span>
+          <span>查看安装说明</span>
           <ArrowRight class="w-3 h-3" />
         </a>
       </div>

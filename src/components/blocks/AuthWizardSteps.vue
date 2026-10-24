@@ -142,7 +142,7 @@ function completeWizard() {
           <div v-else-if="currentStep === 3" class="space-y-6 animate-fade-in text-left">
             <div>
               <h3 class="text-lg font-bold text-zinc-900 dark:text-white">步骤 3：选择您在团队中的核心职责与常用技术栈</h3>
-              <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">系统将根据您的技术栈自动预装 CLI 脚手架并推荐对应的 Blocks 模板。</p>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">我们会根据你选择的技术栈推荐合适的项目模板。</p>
             </div>
 
             <!-- 职责多态网格 -->
