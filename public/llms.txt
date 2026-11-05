@@ -1,0 +1,161 @@
+# Aura UI — Design System & Motion Component Engine for Vue 3
+
+> Aura UI is an AI-first, production-grade motion component library and full-scene UI block engine crafted for Vue 3.5+, Tailwind CSS, and VueUse. It provides 109 full-scene interface blocks across 8 application suites and 40+ atomic motion primitives in pure single-file component (.vue SFC) architecture.
+> All code is self-contained, copy-paste ready, and strictly typed with TypeScript.
+
+Homepage: https://auraui.lvky.cn
+Repository: https://github.com/981029l/-Aura
+Documentation: https://auraui.lvky.cn/docs
+Scene Blocks: https://auraui.lvky.cn/blocks
+Universal Design System: https://auraui.lvky.cn/DESIGN.md
+LLM Registry Index: https://auraui.lvky.cn/llms.txt
+
+---
+
+## 1. Quick Start & Prerequisites
+
+Aura UI components do NOT require a heavy UI library package. They are designed to be copied directly into your project's `src/components/ui/` and `src/components/blocks/` directories.
+
+### Required Dependencies
+```bash
+pnpm add @vueuse/core clsx tailwind-merge lucide-vue-next
+```
+
+### Tailwind CSS Configuration
+Ensure your `tailwind.config.js` has `darkMode: 'class'` enabled and includes standard color scales:
+```javascript
+export default {
+  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        border: 'hsl(var(--border))',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.3s ease-out forwards',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+    },
+  },
+  plugins: [],
+}
+```
+
+---
+
+## 2. Core Aesthetic & Design Tokens
+
+Aura UI enforces strict visual harmony for modern AI-native SaaS, consoles, and developer tools:
+
+* **Dark Mode Primacy**: Default backgrounds use `zinc-950` with `zinc-900` card surfaces, and `zinc-800/80` borders. Light mode uses clean `zinc-50` with pure `white` surfaces and `zinc-200/90` borders.
+* **Border Radii**: Strict 12px (`rounded-xl`), 16px (`rounded-2xl`), or 24px (`rounded-3xl`) for containers; 8px (`rounded-lg`) for buttons and interactive controls.
+* **Accent Palette**:
+  - Primary Action: Electric Blue (`bg-blue-600 hover:bg-blue-500`, `#2563eb`)
+  - AI & Cyberpunk Accents: Emerald (`#10b981`), Violet/Indigo (`#8b5cf6`), Amber (`#f59e0b`), Sky (`#0284c7`)
+* **Typography**:
+  - UI Labels & Headers: Inter / Plus Jakarta Sans / system-ui, high weight (`font-bold`, `font-extrabold`)
+  - Terminal & Metrics: JetBrains Mono / Fira Code (`font-mono`), tight tracking
+* **Glassmorphism**: `backdrop-blur-md bg-white/80 dark:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800/80`
+
+---
+
+## 3. The 8 Suite Design Systems (109 Full-Scene Blocks)
+
+Aura UI organizes its 109 full-scene blocks into 8 thematic suites:
+
+### Suite 1: AI 工作台与智能体控制台 (`ai-consoles` · 16 Blocks)
+* **Theme**: Deep space dark mode, neon status indicators, real-time token stream telemetry.
+* **Key Blocks**:
+  - `AiAgentWorkspace.vue`: Multi-agent orchestration studio with dynamic DAG step visualization.
+  - `AiPromptStudio.vue`: Prompt engineering testbed with side-by-side model comparison.
+  - `AiRagKnowledgeExplorer.vue`: Vector retrieval chunk inspector with similarity scoring badges.
+  - `AiModelArena.vue`: Double-blind LLM arena evaluation console.
+  - `AiQuantumBlochConsole.vue`: Quantum/weights inspector console.
+* **AI Instructions**: Always use `font-mono` for metrics, latency, and tokens. Animate data streams with pulsing emerald badges.
+
+### Suite 2: SaaS 现代管理后台大盘 (`saas-dashboards` · 16 Blocks)
+* **Theme**: Precision FinOps, service mesh topologies, high-density data grids.
+* **Key Blocks**:
+  - `DashboardKpiMatrix.vue`: Multi-metric ARR, churn, and LTV telemetry cards with micro sparklines.
+  - `DashboardSecurityHeatmap.vue`: Global threat intelligence node map.
+  - `DashboardRbacUsers.vue`: Enterprise role-based access matrix.
+  - `DashboardServiceMesh.vue`: Microservice RPC latency & health monitoring graph.
+
+### Suite 3: 官网首屏与门面大秀场 (`hero-sections` · 16 Blocks)
+* **Theme**: 16:10 high-impact viewports, RetroGrid 3D depth, terminal simulators, WordRotate headlines.
+* **Key Blocks**:
+  - `HeroGradientBadge.vue`: Signature glow hero with live interactive preview.
+  - `HeroTerminalDeveloper.vue`: Typewriter code emulator with 1-click copy snippets.
+  - `Hero3dGlobe.vue`: Rotating orbital cluster visualization.
+  - `HeroMobileApp.vue`: Dual-device framed mockup display.
+
+### Suite 4: 业务价值与便当格特性展厅 (`feature-sections` · 16 Blocks)
+* **Theme**: Bento Grid asymmetrical layouts, spotlight cursor trackers, interactive tabs.
+* **Key Blocks**:
+  - `FeaturesBentoGrid.vue`: 4-column Bento layout with reactive hover glow.
+  - `FeaturesStickyStory.vue`: Scroll-linked timeline progress narrative.
+  - `FeaturesDeveloperSdk.vue`: Real-world copy-paste Vue 3 SFC developer pitch.
+
+### Suite 5: 高转化定价矩阵与计费方案 (`pricing-sections` · 12 Blocks)
+* **Theme**: Annual/monthly toggle with savings badges, feature comparison checkmarks, enterprise quote modals.
+* **Key Blocks**:
+  - `PricingBillingToggle.vue`: Instant monthly/annual rate switch with spring scale.
+  - `PricingAddonMatrix.vue`: Dynamic seat, storage, and GPU quota calculator.
+  - `PricingEnterpriseQuote.vue`: Tailored quote generator with custom SLA selector.
+
+### Suite 6: 社会认同与客户见证墙 (`testimonials` · 12 Blocks)
+* **Theme**: Infinite marquee carousels, founder letter spotlight, video testimonial modal grids.
+* **Key Blocks**:
+  - `TestimonialsMarqueeWall.vue`: Continuous two-row card marquee with hover-pause.
+  - `TestimonialsFounderLetter.vue`: Warm frosted editorial letter with avatar signature.
+
+### Suite 7: 引导与安全认证流程 (`auth-onboarding` · 10 Blocks)
+* **Theme**: High-conversion split cards, multi-step wizards, 2FA biometric verification.
+* **Key Blocks**:
+  - `AuthWizardSteps.vue`: 4-step progressive disclosure questionnaire with animated step indicators.
+  - `AuthTwoFactorCard.vue`: 6-digit TOTP pin auto-advance input.
+  - `AuthSplitShowcase.vue`: Left-side branding carousel with right-side OAuth authentication.
+
+### Suite 8: 页脚导航与行动号召 (`footers-cta` · 10 Blocks)
+* **Theme**: Aurora dawn gradients, developer CLI pills, 4-column mega navigation grids.
+* **Key Blocks**:
+  - `FooterDeveloperCliCta.vue`: Centered terminal capsule with Vite starter script and copy feedback.
+  - `FooterEnterpriseMega.vue`: Multi-column legal, sitemap, language switcher, and real-time status badge.
+
+---
+
+## 4. Atomic Motion Primitives (40+ Components)
+
+| Component | Path | Description | Key Props |
+| :--- | :--- | :--- | :--- |
+| `BorderBeam` | `@/components/ui/BorderBeam.vue` | Glowing animated laser border following container path | `duration`, `borderWidth`, `size` |
+| `Meteors` | `@/components/ui/Meteors.vue` | Diagonal cyber meteors shooting across dark backdrops | `number` |
+| `RetroGrid` | `@/components/ui/RetroGrid.vue` | 3D perspective cyber retro wireframe grid | `angle`, `opacity` |
+| `DotPattern` | `@/components/ui/DotPattern.vue` | SVG grid pattern with interactive cursor proximity glow | `width`, `height`, `glow` |
+| `Ripple` | `@/components/ui/Ripple.vue` | Expanding concentric acoustic soundwave circles | `mainCircleSize`, `numCircles` |
+| `ShimmerButton` | `@/components/ui/ShimmerButton.vue` | High-conversion button with rotating perimeter light | `shimmerColor`, `shimmerDuration` |
+| `ShinyText` | `@/components/ui/ShinyText.vue` | Metallic light swipe looping over heading typography | `text`, `duration` |
+| `LampEffect` | `@/components/ui/LampEffect.vue` | Overhead celestial stadium light cone casting dramatic glow | default slot |
+| `TiltCard` | `@/components/ui/TiltCard.vue` | 3D parallax tilt responsive to mouse cursor coordinates | `maxTilt`, `glare` |
+| `Marquee` | `@/components/ui/Marquee.vue` | Infinite seamless marquee row with hover pause and reverse | `duration`, `reverse`, `pauseOnHover` |
+| `WordRotate` | `@/components/ui/WordRotate.vue` | Animated vertical flip-in rotation across a word array | `words`, `duration` |
+| `Confetti` | `@/components/ui/Confetti.vue` | Canvas particle celebration burst for conversions | `trigger` |
+
+---
+
+## 5. Universal Prompt Pattern for AI Agents (Cursor / Claude Code)
+
+When requesting a new Vue 3 component or page from an AI assistant, provide this prompt structure:
+
+```markdown
+You are a senior Vue 3.5 and Tailwind CSS engineer following Aura UI DESIGN.md guidelines.
+Task: Create a [Component/Block Name] for [Specific Business Goal].
+
+Constraints:
+1. Pure Vue 3 Single File Component (<script setup lang="ts">).
+2. Use Tailwind CSS with dark mode support (e.g., bg-white dark:bg-zinc-950).
+3. Do NOT invent fictional external packages. Use standard VueUse (@vueuse/core), clsx, and tailwind-merge.
+4. Keep the component self-contained, typed, and interactive.
+5. Apply Aura UI aesthetic: micro-borders (border-zinc-200/80 dark:border-zinc-800/80), smooth spring transitions, and elegant glassmorphic surfaces.
+```

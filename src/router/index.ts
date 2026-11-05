@@ -27,6 +27,12 @@ const router = createRouter({
       component: () => import('@/views/BlockStandalonePreview.vue'),
     },
     {
+      path: '/design-md',
+      alias: ['/designs', '/ai'],
+      name: 'design-md',
+      component: () => import('@/views/DesignMdView.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       redirect: '/',
     },

@@ -26,12 +26,15 @@
 ## 🌐 在线体验与演示
 
 * 🚀 **在线演示地址**：[https://auraui.lvky.cn](https://auraui.lvky.cn)
+* 🤖 **AI 规约中心 (DESIGN.md Hub)**：[https://auraui.lvky.cn/design-md](https://auraui.lvky.cn/design-md)
+* 📄 **LLM 索引端点**：[https://auraui.lvky.cn/llms.txt](https://auraui.lvky.cn/llms.txt)
 * 🐙 **GitHub 仓库**：[https://github.com/981029l/-Aura.git](https://github.com/981029l/-Aura.git)
 
 ---
 
 ## 💡 为什么选择 AuraUI？
 
+* **🤖 AI 编程助手原生支持（DESIGN.md & llms.txt）**：对标 `getdesign.md` 与 `stylekit.top`，为 Cursor、Claude Code、Windsurf 提供开箱即用的结构化设计规约与提示词。把 `AURA.DESIGN.md` 丢进项目根目录或 `.cursorrules`，AI 即可生成高质量、无幻觉的 Vue 3 + Tailwind 现代前端；
 * **代码即用（Copy & Paste）**：类似 `shadcn/ui` 的设计哲学，不发布黑盒 npm 运行包。每个组件都是干净透明的 `.vue` 单文件，直接复制到你项目的 `src/components/ui/`，代码完全由你掌控；
 * **单文件自包含（Zero-Config）**：动画关键帧与流光逻辑均封装在单文件内或基于 Tailwind 工具类，**无需复杂修改现有的 `tailwind.config.js`**，拷过去立刻生效；
 * **真·明暗双模（Clean Light & Deep Dark）**：全套组件原生兼顾纯白极简风与深色科技风，在浅色背景下轮廓分明，在暗黑背景下流光溢彩；

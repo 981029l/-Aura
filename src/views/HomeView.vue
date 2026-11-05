@@ -78,10 +78,32 @@ const techLogos = [
 
 const heroCardCopied = ref(false)
 function copyInstallGuide() {
-  navigator.clipboard.writeText('npm i @vueuse/core clsx tailwind-merge')
+  navigator.clipboard.writeText('pnpm add @vueuse/core clsx tailwind-merge')
   heroCardCopied.value = true
   setTimeout(() => {
     heroCardCopied.value = false
+  }, 2000)
+}
+
+const copiedBlockPromptId = ref<string | null>(null)
+async function copyBlockPrompt(block: any) {
+  const prompt = `@DESIGN.md
+You are a senior Vue 3 engineer. Please build a production-grade component modeled after Aura UI's "${block.name}" (${block.title}).
+Context & Specs:
+- Suite: ${block.suiteId}
+- Category: ${block.category}
+- Description: ${block.description}
+- Online Preview: https://auraui.lvky.cn/preview/${block.id}
+
+Constraints:
+1. Pure Vue 3.5 Single File Component (<script setup lang="ts">).
+2. Tailwind CSS with dual-theme support (dark: variant).
+3. Self-contained with reactive states, using only standard VueUse and Tailwind.`
+
+  await navigator.clipboard.writeText(prompt)
+  copiedBlockPromptId.value = block.id
+  setTimeout(() => {
+    copiedBlockPromptId.value = null
   }, 2000)
 }
 
@@ -123,10 +145,19 @@ function openSearchModal() {
       <!-- 核心行动按钮 (CTA) -->
       <div class="relative z-10 mt-7 flex flex-wrap items-center justify-center gap-3.5">
         <router-link :to="'/docs/' + getLastVisitedDocId()">
-          <ShimmerButton shimmer-color="#60a5fa" class="h-11 px-7 text-sm sm:text-base shadow-lg shadow-blue-500/20">
+          <ShimmerButton shimmer-color="#60a5fa" class="h-11 px-6 text-sm sm:text-base shadow-lg shadow-blue-500/20 font-bold">
             <span>浏览组件库</span>
             <ArrowRight class="h-4 w-4" />
           </ShimmerButton>
+        </router-link>
+
+        <router-link
+          to="/design-md"
+          class="inline-flex h-11 items-center gap-2 rounded-full border border-purple-500/30 bg-purple-50/80 dark:bg-purple-950/40 px-5 text-sm font-semibold text-purple-700 dark:text-purple-300 shadow-sm backdrop-blur-md transition-all hover:bg-purple-100 hover:border-purple-500/50 dark:hover:bg-purple-900/50 cursor-pointer"
+        >
+          <Bot class="h-4 w-4 text-purple-500" />
+          <span>AI 规约 (DESIGN.md)</span>
+          <span class="rounded-full bg-purple-200/80 dark:bg-purple-800/80 px-1.5 py-0.2 text-[10px] font-mono font-bold">New</span>
         </router-link>
 
         <button
@@ -635,13 +666,24 @@ function openSearchModal() {
             </p>
           </div>
         </div>
-        <router-link
-          :to="'/blocks/' + activeSuiteBlocks[0]?.id"
-          class="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 transition-colors"
-        >
-          <span>进入此套件中心 (共 {{ activeSuite.count }} 款)</span>
-          <ArrowRight class="w-3.5 h-3.5" />
-        </router-link>
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <router-link
+            to="/design-md"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold text-xs dark:border-purple-800 dark:bg-purple-950/50 dark:text-purple-300 transition-colors shadow-2xs"
+            title="查看此套件对应的 DESIGN.md 规约"
+          >
+            <Bot class="w-3.5 h-3.5 text-purple-500" />
+            <span>套件 DESIGN.md</span>
+          </router-link>
+
+          <router-link
+            :to="'/blocks/' + activeSuiteBlocks[0]?.id"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-colors shadow-sm"
+          >
+            <span>进入此套件中心 (共 {{ activeSuite.count }} 款)</span>
+            <ArrowRight class="w-3.5 h-3.5" />
+          </router-link>
+        </div>
       </div>
 
       <!-- 精选 4 款场景区块陈列矩阵（升级为 Supahero 风格 16:10 黄金宽屏真实实景仿真视窗画廊） -->
@@ -682,8 +724,8 @@ function openSearchModal() {
               </p>
             </div>
 
-            <!-- 底部双行动通道（WCAG 触控体验增强） -->
-            <div class="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between gap-3 text-xs">
+            <!-- 底部操作通道（WCAG 触控体验增强） -->
+            <div class="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 text-xs">
               <router-link
                 :to="'/blocks/' + block.id"
                 class="inline-flex items-center gap-1.5 py-1.5 font-semibold text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors"
@@ -692,16 +734,29 @@ function openSearchModal() {
                 <ArrowRight class="w-3.5 h-3.5" />
               </router-link>
 
-              <router-link
-                :to="'/preview/' + block.id"
-                target="_blank"
-                class="inline-flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 font-semibold dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shadow-sm"
-                :title="'在独立新窗口全屏实景体验 ' + block.title"
-                :aria-label="'在独立新窗口全屏实景体验 ' + block.title"
-              >
-                <span>实景全屏预览</span>
-                <ExternalLink class="w-3.5 h-3.5 text-zinc-400 group-hover:text-blue-500" />
-              </router-link>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  @click="copyBlockPrompt(block)"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-purple-200/90 bg-purple-50/70 hover:bg-purple-100 text-purple-700 font-semibold dark:border-purple-900/60 dark:bg-purple-950/40 dark:text-purple-300 transition-colors cursor-pointer"
+                  :title="'复制供给 Cursor / Claude 的 ' + block.title + ' 专属提示词'"
+                >
+                  <Check v-if="copiedBlockPromptId === block.id" class="w-3.5 h-3.5 text-emerald-500" />
+                  <Bot v-else class="w-3.5 h-3.5 text-purple-500" />
+                  <span>{{ copiedBlockPromptId === block.id ? '已复制 Prompt' : '复制 AI 提示词' }}</span>
+                </button>
+
+                <router-link
+                  :to="'/preview/' + block.id"
+                  target="_blank"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1.5 min-h-[32px] rounded-lg border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 font-semibold dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 transition-colors shadow-sm"
+                  :title="'在独立新窗口全屏实景体验 ' + block.title"
+                  :aria-label="'在独立新窗口全屏实景体验 ' + block.title"
+                >
+                  <span>全屏预览</span>
+                  <ExternalLink class="w-3.5 h-3.5 text-zinc-400 group-hover:text-blue-500" />
+                </router-link>
+              </div>
             </div>
           </div>
         </div>

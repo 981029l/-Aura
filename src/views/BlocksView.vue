@@ -32,6 +32,8 @@ import {
   LayoutGrid,
   Wifi,
   Signal,
+  Check,
+  FileText,
 } from 'lucide-vue-next'
 
 const route = useRoute()
@@ -198,6 +200,29 @@ watch(
 function reloadBlock() {
   refreshKey.value++
 }
+
+const copiedPromptState = ref(false)
+async function copyCurrentBlockPrompt() {
+  const block = currentBlock.value
+  const suite = currentSuite.value
+  const prompt = `@DESIGN.md
+You are a senior Vue 3.5 engineer. Please implement a production-grade component modeled after Aura UI's "${block.name}" (${block.title}).
+Suite: ${suite?.name} (${suite?.englishName})
+Category: ${block.category}
+Description: ${block.description}
+Online Preview: https://auraui.lvky.cn/preview/${block.id}
+
+Constraints:
+1. Pure Vue 3.5 Single File Component (<script setup lang="ts">) using Tailwind CSS.
+2. Self-contained, responsive, and dual-theme (dark: variant) ready.
+3. Use only standard VueUse (@vueuse/core), clsx, tailwind-merge, and lucide-vue-next.`
+
+  await navigator.clipboard.writeText(prompt)
+  copiedPromptState.value = true
+  setTimeout(() => {
+    copiedPromptState.value = false
+  }, 2000)
+}
 </script>
 
 <template>
@@ -358,21 +383,46 @@ function reloadBlock() {
       <main class="min-w-0 flex-1">
         <div class="space-y-4">
           <!-- 区块标题与简介 -->
-          <div class="space-y-2">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full" :class="currentSuite?.badgeColor">
-                {{ currentSuite?.name }}
-              </span>
-              <span class="text-xs font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
-                {{ currentBlock.blockFilename }}
-              </span>
-              <span
-                v-for="tag in currentBlock.tags"
-                :key="tag"
-                class="text-[10px] px-2 py-0.5 rounded-md font-mono bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400"
-              >
-                #{{ tag }}
-              </span>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full" :class="currentSuite?.badgeColor">
+                  {{ currentSuite?.name }}
+                </span>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+                  {{ currentBlock.blockFilename }}
+                </span>
+                <span
+                  v-for="tag in currentBlock.tags"
+                  :key="tag"
+                  class="text-[10px] px-2 py-0.5 rounded-md font-mono bg-zinc-100 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+
+              <!-- AI 专属行动通道 -->
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  @click="copyCurrentBlockPrompt"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-purple-200/90 bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-xs dark:border-purple-800 dark:bg-purple-950/60 dark:text-purple-300 transition-all cursor-pointer shadow-2xs active:scale-95"
+                  title="复制喂给 Cursor / Claude 的该组件专属提示词"
+                >
+                  <Check v-if="copiedPromptState" class="w-3.5 h-3.5 text-emerald-500" />
+                  <Bot v-else class="w-3.5 h-3.5 text-purple-500" />
+                  <span>{{ copiedPromptState ? '已复制 Cursor 提示词' : '复制 AI 提示词' }}</span>
+                </button>
+
+                <router-link
+                  to="/design-md"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 font-semibold text-xs dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 transition-colors shadow-2xs"
+                  title="查看该套件所属的 DESIGN.md 规约"
+                >
+                  <FileText class="w-3.5 h-3.5 text-blue-500" />
+                  <span>套件 DESIGN.md</span>
+                </router-link>
+              </div>
             </div>
             <div class="flex flex-wrap items-baseline gap-2.5">
               <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 font-mono">

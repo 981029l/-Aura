@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { Github, Layers, LayoutGrid, Menu, X, Search } from 'lucide-vue-next'
+import { Github, Layers, LayoutGrid, Menu, X, Search, Bot } from 'lucide-vue-next'
 import ThemeToggle from './ThemeToggle.vue'
 import SearchModal from './SearchModal.vue'
 import {
@@ -18,6 +18,7 @@ import {
 const route = useRoute()
 const isDocsActive = computed(() => route.path.startsWith('/docs'))
 const isBlocksActive = computed(() => route.path.startsWith('/blocks'))
+const isDesignMdActive = computed(() => route.path.startsWith('/design-md'))
 
 // 全局 Command Palette 搜索弹窗控制
 const isSearchOpen = ref(false)
@@ -138,6 +139,21 @@ watch(
         >
           <LayoutGrid class="h-4 w-4" />
           <span>场景区块 ({{ BLOCKS_DATA.length }})</span>
+        </router-link>
+        <router-link
+          to="/design-md"
+          class="inline-flex items-center gap-1.5 transition-colors"
+          :class="
+            isDesignMdActive
+              ? 'text-purple-600 dark:text-purple-400 font-semibold'
+              : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+          "
+        >
+          <Bot class="h-4 w-4 text-purple-500" />
+          <span>DESIGN.md</span>
+          <span class="rounded-full bg-purple-100 dark:bg-purple-950/80 px-1.5 py-0.2 text-[9px] font-mono font-bold text-purple-600 dark:text-purple-300">
+            AI 规约
+          </span>
         </router-link>
       </nav>
 
@@ -266,6 +282,23 @@ watch(
           </div>
           <span class="rounded bg-zinc-100 dark:bg-zinc-900 px-1.5 py-0.5 text-xs text-zinc-500 font-mono">
             {{ BLOCKS_DATA.length }}
+          </span>
+        </router-link>
+        <router-link
+          to="/design-md"
+          class="flex items-center justify-between rounded-xl px-3 py-2 transition-colors"
+          :class="
+            isDesignMdActive
+              ? 'bg-purple-50 text-purple-600 font-semibold dark:bg-purple-950/50 dark:text-purple-400'
+              : 'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900'
+          "
+        >
+          <div class="flex items-center gap-2">
+            <Bot class="h-4 w-4 text-purple-500" />
+            <span>DESIGN.md (AI 规约)</span>
+          </div>
+          <span class="rounded bg-purple-100 dark:bg-purple-900/60 px-1.5 py-0.5 text-[10px] text-purple-700 dark:text-purple-300 font-mono font-bold">
+            Cursor
           </span>
         </router-link>
       </nav>
